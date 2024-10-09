@@ -1,7 +1,7 @@
 #include "../dependencies/CTextEngine.h"
 #include "../dependencies/LuaCEmbed.h"
 #include "../dependencies/luaDoTheWorld/one.c"
-
+#include "../dependencies/silverchain/src/imports/imports.func_definition.h"
 #include "lua_code.h"
 
 LuaCEmbedNamespace lua;
@@ -24,6 +24,7 @@ void add_callbacks(LuaCEmbed *main_obj){
     lua.tables.set_method(clib,"out_extension",get_out_extension);
     lua.tables.set_method(clib,"replace",lua_replace_string);
     lua.tables.set_method(clib,"trim",lua_trim);
+    LuaCEmbedTable *silverchain = lua.globals.new_table(main_obj,"generte_code");
 
 }
 

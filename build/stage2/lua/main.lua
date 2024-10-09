@@ -1,6 +1,7 @@
 local function aply_replacment(content)
     content = content:gsub('#include "inner.h"', '')
     content = content:gsub('#include "config.h"', '')
+    content = content:gsub('#include "bearssl.h"', '#include "../inc/bearssl.h"')
 
     return content
 end
@@ -12,19 +13,10 @@ local function main()
     end
 
     dtw.remove_any("Project")
-    dtw.copy_any_merging("BearSSL", "Project")
+    dtw.copy_any_overwriting("BearSSL/inc", "Project/inc")
+    dtw.copy_any_overwriting("BearSSL/src", "Project/src")
 
-    local inc = dtw.newTree_from_hardware("Project/inc")
-    inc.map(function(current)
-        content = aply_replacment(current.get_value())
-        current.set_value(content)
-        local new_name = "bearl." .. current.path.get_name()
-        current.path.set_name(new_name)
-        current.path.set_dir("Project/src/inc")
-        current.hardware_modify()
-    end)
 
-    inc.commit()
 
     local src = dtw.newTree_from_hardware("Project/src")
     src.map(function(current)
@@ -47,8 +39,8 @@ local function main()
     src.commit()
 
     silver_chain.generate_code(
-        "Project",
-        "Project/src/imports",
+        "Project/src",
+        "Project/imports",
         "bear_ssl",
         { "bear", "fdeclare", "fdefine" }
     )

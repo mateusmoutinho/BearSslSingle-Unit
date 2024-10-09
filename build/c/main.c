@@ -26,6 +26,7 @@ int main(int argc,char *argv[]){
     lua  = newLuaCEmbedNamespace();
     dtw = newDtwNamespace();
     stack = newCTextStackModule();
+
     LuaCEmbed * main_obj = lua.newLuaEvaluation();
     lua.load_lib_from_c(main_obj,load_luaDoTheWorld,"dtw");
     lua.load_native_libs(main_obj);

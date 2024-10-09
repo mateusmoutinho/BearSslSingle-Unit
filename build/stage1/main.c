@@ -119,7 +119,7 @@ int main(){
     dtw.string_array.append(tags,FDECLARE_FLAG);
     dtw.string_array.append(tags,FDEFINE_FLAG);
 
-    generate_code(STAGE_2_FOLDER,IMPORT_NAME,PROJECT_SHORT_CUT_DEFAULT,tags,true,DEFAULT_MAIN_C_NAME,NULL);
+    generate_code(STAGE_2_FOLDER,"stage2/c/imports","silverchain_stage2",tags,true,DEFAULT_MAIN_C_NAME,NULL);
     dtw.string_array.free(tags);
 
 

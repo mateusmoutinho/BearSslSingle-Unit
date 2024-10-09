@@ -21,36 +21,14 @@ local function concat_name_on_funcs(path, content)
 
     return content
 end
+-- Função para adicionar o prefixo "private_"
+local function add_path_control(content)
+    -- Adicionar "private_" a nomes de funções globais
+    content = content:gsub("([%a_][%w_]*)%s*%(", "private_%1(")
 
-function concat_name_in_specif_modules(path, content)
-    local MODULES = {
-        "ec_all_m15.c",
-        "ec_all_m31.c",
-        "ec_c25519_i15.c",
-        "ec_c25519_i31.c",
-        "ec_c25519_m15.c",
-        "ec_c25519_m31.c",
-        "ec_c25519_m62.c",
-        "ec_c25519_m64.c",
-        "ec_curve25519.c"
-    }
-    for i = 1, #MODULES do
-        if path.get_name() == MODULES[i] then
-            return concat_name_on_funcs(path, content)
-        end
-    end
-    return content
-end
-
-local function aply_replacment(path, content)
-    content = content:gsub('#include "inner.h"', '')
-    content = content:gsub('#include "config.h"', '')
-    content = content:gsub('#include "bearssl.h"', '#include "../inc/bearssl.h"')
-    content = concat_name_in_specif_modules(path, content)
-
-
-
-
+    -- Adicionar "private_" a variáveis globais
+    content = content:gsub("([%a_][%w_]*)%s*;", "private_%1;")
+    content = content:gsub("([%a_][%w_]*)%s*=%s*[^;]*;", "private_%1 = %2;")
 
     return content
 end
@@ -70,14 +48,14 @@ local function main()
     local src = dtw.newTree_from_hardware("Project/src")
     src.map(function(current)
         if current.path.get_extension() == "c" then
-            content = aply_replacment(current.path, current.get_value())
+            content = add_path_control(current.get_value())
             current.set_value(content)
             local new_name = "fdefine." .. current.path.get_name()
             current.path.set_name(new_name)
         end
 
         if current.path.get_extension() == "h" then
-            content = aply_replacment(current.path, current.get_value())
+            -- content = add_path_control(current.get_value())
             current.set_value(content)
             local new_name = "fdeclare." .. current.path.get_name()
             current.path.set_name(new_name)

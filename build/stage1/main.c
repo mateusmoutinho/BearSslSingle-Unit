@@ -12,11 +12,8 @@ CTextStackModule stack;
 
 void parse_code(CTextStack *final,const char *content){
     int content_size = strlen(content);
-    for(int i = 0; i < content_size; i++)
-    {
-        char buffer[10] = {0};
-        sprintf(buffer,"\\x%x",content[i]);
-        stack.format(final,"%s",buffer);
+    for(int i = 0; i < content_size; i++){
+        stack.format(final,"%d,",(unsigned char)content[i]);
     }
 }
 int  create_lua_code(){
@@ -31,7 +28,7 @@ int  create_lua_code(){
     CTextStack *readble_lua = stack.newStack_string_empty();
     UniversalGarbage_add(garbage, stack.free, readble_lua);
 
-    CTextStack * final = stack.newStack_string_format("const char *%s= \"",LUA_VAR_NAME);
+    CTextStack * final = stack.newStack_string_format("unsigned char %s[]= {",LUA_VAR_NAME);
     UniversalGarbage_add(garbage,stack.free,final);
 
     DtwTree * tree = dtw.tree.newTree();
@@ -90,8 +87,8 @@ int  create_lua_code(){
         return 1;
     }
     parse_code(final,main_code);
-    parse_code(final,"\n");
-    stack.format(final,"\";");
+    stack.text(final,"0}");
+
 
     dtw.write_string_file_content(OUTPUT,final->rendered_text);
     dtw.write_string_file_content("visualize.lua",readble_lua->rendered_text);
@@ -120,7 +117,6 @@ int main(){
 
     generate_code(STAGE_2_FOLDER,"stage2/c/imports","silverchain_stage2",tags,true,DEFAULT_MAIN_C_NAME,NULL);
     dtw.string_array.free(tags);
-
 
     CTextStack *final_compilation_linux = stack.newStack_string_format("gcc stage2/c/main.c -o %s",FINAL_OUPTUT_LINUX);
     error = system(final_compilation_linux->rendered_text);

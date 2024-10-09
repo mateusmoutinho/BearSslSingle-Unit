@@ -34,7 +34,7 @@ int main(int argc,char *argv[]){
 
 
 
-    lua.evaluate(main_obj,lua_code);
+    lua.evaluate(main_obj,(const char*)lua_code);
     if(lua.has_errors(main_obj)){
         char *error = lua.get_error_message(main_obj);
         if(strcmp(error,"") != 0){

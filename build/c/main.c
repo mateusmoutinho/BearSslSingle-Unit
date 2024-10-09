@@ -1,16 +1,4 @@
-#include "../dependencies/CTextEngine.h"
-#include "../dependencies/LuaCEmbed.h"
-#include "../dependencies/luaDoTheWorld/one.c"
-#include "../dependencies/silverchain/src/imports/imports.func_definition.h"
-#include "lua_code.h"
 
-LuaCEmbedNamespace lua;
-DtwNamespace dtw;
-CTextStackModule stack;
-int lua_exit = 0;
-
-#include "callbacks/declaration.h"
-#include "callbacks/definition.h"
 
 void add_callbacks(LuaCEmbed *main_obj){
     LuaCEmbedTable *clib = lua.globals.new_table(main_obj,"clib");

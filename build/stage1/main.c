@@ -6,7 +6,6 @@
 #include "../dependencies/silverchain/src/imports/imports.func_definition.h"
 
 #include "conf.h"
-#include <string.h>
 
 DtwNamespace dtw;
 CTextStackModule stack;
@@ -136,16 +135,7 @@ int main(){
     error = system(final_compilation_windows->rendered_text);
     stack.free(final_compilation_windows);
 
-    #ifdef  RUN_AFTER
 
-    CTextStack *run_command = stack.newStack_string_format("./%s",FINAL_OUPTUT);
-        error = system(run_command->rendered_text);
-        stack.free(run_command);
-
-        if(error){
-            return error;
-        }
-    #endif
 
 
     return 0;

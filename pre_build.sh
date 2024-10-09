@@ -1,7 +1,6 @@
 
 gcc build/dependencies/silverchain/src/main.c -o silverchain.out
-./silverchain.out -src buld/c \
--tags dependencies consts types globals fdeclare fdefine 
+./silverchain.out -src build/c  -tags dependencies consts types globals fdeclare fdefine 
 
 
 #cd build 

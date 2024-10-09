@@ -1,4 +1,9 @@
 
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
+
 LuaCEmbedResponse * system_function_with_status(LuaCEmbedTable *self,LuaCEmbed *args){
     char *command = lua.args.get_str(args,0);
     if(lua.has_errors(args)){

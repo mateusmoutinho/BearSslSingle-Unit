@@ -1,4 +1,9 @@
 
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "imports/imports.fdefine.h"
+//silver_chain_scope_end
+
 
 void add_callbacks(LuaCEmbed *main_obj){
     LuaCEmbedTable *clib = lua.globals.new_table(main_obj,"clib");

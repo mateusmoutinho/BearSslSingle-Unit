@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 LuaCEmbedResponse * lua_get_str_size(LuaCEmbedTable *self,LuaCEmbed *args){
     long size;
     lua.args.get_raw_str(args,&size,0);

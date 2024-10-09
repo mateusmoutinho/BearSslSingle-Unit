@@ -1,4 +1,9 @@
 
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
+
 LuaCEmbedResponse * generate_exit(LuaCEmbedTable *self,LuaCEmbed *args){
 
     printf("\x1b[0m"); //ressset color

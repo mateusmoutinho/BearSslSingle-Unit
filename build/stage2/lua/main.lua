@@ -3,28 +3,26 @@ local function main()
     dtw.remove_any("BearSSL")
     os.execute("git clone https://www.bearssl.org/git/BearSSL")
 
-    local all_itens = dtw.list_files_recursively("BearSSL/src", true)
-    for i = 1, #all_itens do
-        current = all_itens[i]
-        local content = dtw.load_file(current)
-        local path_obj = dtw.newPath(current)
-        local name = path_obj.get_name()
-        local extension = path_obj.get_extension()
-        print(path_obj.get_full_path())
-
-        if extension == "c" then
+    local all_itens = dtw.newTree_from_hardware("BearSSL/src")
+    all_itens.map(function(current)
+        if current.path.get_extension() == "c" then
+            content = current.get_value()
             content = content:gsub('#include "inner.h"', '')
-            local new_name = "fdefine." .. name
-            path_obj.set_name(new_name)
-            dtw.write_file(path_obj.get_full_path(), content)
-            dtw.remove_any(current)
+            local new_name = "fdefine." .. current.path.get_name()
+            current.path.set_name(new_name)
         end
-        if extension == "h" then
-            local new_name = "fdeclare." .. name
-            path_obj.set_name(new_name)
-            dtw.move_any_overwriting(current, path_obj.get_full_path())
+
+        if current.path.get_extension() == "h" then
+            local new_name = "fdeclare." .. current.path.get_name()
+            current.path.set_name(new_name)
         end
-    end
+        current.hardware_modify()
+    end)
+
+    all_itens.commit()
+
+
+
     silver_chain.generate_code(
         "BearSSL",
         "BearSSL/imports",

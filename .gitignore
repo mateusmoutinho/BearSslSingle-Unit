@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 BearSSL
+Project
 # Object files
 *.o
 *.ko

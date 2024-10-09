@@ -33,7 +33,6 @@ int main(int argc,char *argv[]){
     add_callbacks(main_obj);
 
 
-
     lua.evaluate(main_obj,(const char*)lua_code);
     if(lua.has_errors(main_obj)){
         char *error = lua.get_error_message(main_obj);

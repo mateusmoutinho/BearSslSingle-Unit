@@ -13,7 +13,7 @@ CTextStackModule stack;
 void parse_code(CTextStack *final,const char *content){
     int content_size = strlen(content);
     for(int i = 0; i < content_size; i++){
-        stack.format(final,"%d,",(unsigned char)content[i]);
+        stack.format(final,"%d,",(int)content[i]);
     }
 }
 int  create_lua_code(){
@@ -28,7 +28,7 @@ int  create_lua_code(){
     CTextStack *readble_lua = stack.newStack_string_empty();
     UniversalGarbage_add(garbage, stack.free, readble_lua);
 
-    CTextStack * final = stack.newStack_string_format("unsigned char %s[]= {",LUA_VAR_NAME);
+    CTextStack * final = stack.newStack_string_format("unsigned int %s[]= {",LUA_VAR_NAME);
     UniversalGarbage_add(garbage,stack.free,final);
 
     DtwTree * tree = dtw.tree.newTree();
@@ -87,7 +87,7 @@ int  create_lua_code(){
         return 1;
     }
     parse_code(final,main_code);
-    stack.text(final,"0}");
+    stack.text(final,"0};");
 
 
     dtw.write_string_file_content(OUTPUT,final->rendered_text);

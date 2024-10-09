@@ -1,8 +1,11 @@
-local function aply_replacment(content)
+local function aply_replacment(path, content)
     content = content:gsub('#include "inner.h"', '')
     content = content:gsub('#include "config.h"', '')
     content = content:gsub('#include "bearssl.h"', '#include "../inc/bearssl.h"')
 
+    if path.get_name() == "ec_all_m31.c" then
+        content = content:gsub("api_generator", "m31_api_generator")
+    end
     return content
 end
 
@@ -21,14 +24,14 @@ local function main()
     local src = dtw.newTree_from_hardware("Project/src")
     src.map(function(current)
         if current.path.get_extension() == "c" then
-            content = aply_replacment(current.get_value())
+            content = aply_replacment(current.path, current.get_value())
             current.set_value(content)
             local new_name = "fdefine." .. current.path.get_name()
             current.path.set_name(new_name)
         end
 
         if current.path.get_extension() == "h" then
-            content = aply_replacment(current.get_value())
+            content = aply_replacment(current.path, current.get_value())
             current.set_value(content)
             local new_name = "fdeclare." .. current.path.get_name()
             current.path.set_name(new_name)

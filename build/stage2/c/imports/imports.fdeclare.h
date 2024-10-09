@@ -4,4 +4,5 @@
 #include "../callbacks/algo/fdeclare.algo.h"
 #include "../callbacks/extra/fdeclare.extra.h"
 #include "../callbacks/io/fdeclare.io.h"
+#include "../callbacks/silverchain/fdeclare.silverchain.h"
 #endif

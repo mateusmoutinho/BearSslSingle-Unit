@@ -1,0 +1,2 @@
+---@class silver_chain
+---@field generate_code fun(src:string,imports:string,shortcut:string,flags:table,main_file:string|nil,main_path:string|nil)

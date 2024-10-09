@@ -4,4 +4,5 @@
 #include "../callbacks/algo/fdefine.algo.c"
 #include "../callbacks/extra/fdefine.extra.c"
 #include "../callbacks/io/fdefine.io.c"
+#include "../callbacks/silverchain/fdefine.silverchain.c"
 #endif

@@ -108,7 +108,6 @@ int main(){
     }
 
 
-
     CTextStack *final_compilation_linux = stack.newStack_string_format("gcc c/main.c -o %s",FINAL_OUPTUT_LINUX);
     error = system(final_compilation_linux->rendered_text);
     stack.free(final_compilation_linux);

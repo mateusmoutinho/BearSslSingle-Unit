@@ -104,16 +104,6 @@ int main(){
     dtw = newDtwNamespace();
     stack = newCTextStackModule();
 
-    DtwStringArray *tags = newDtwStringArray();
-    dtw.string_array.append(tags,"dependencies");
-    dtw.string_array.append(tags,"consts");
-    dtw.string_array.append(tags,"types");
-    dtw.string_array.append(tags,"globals");
-    dtw.string_array.append(tags,"fdeclare");
-    dtw.string_array.append(tags,"fdefine");
-
-    generate_code("stage3","imports","silverchain",tags,true,"main.c",NULL);
-    return 0;
 
     int error = create_lua_code();
     if(error){
@@ -121,8 +111,19 @@ int main(){
     }
 
 
+    DtwStringArray *tags = newDtwStringArray();
+    dtw.string_array.append(tags,DEPENDENCIES_FLAG);
+    dtw.string_array.append(tags,CONST_FLAGS);
+    dtw.string_array.append(tags,TYPES_FLAG);
+    dtw.string_array.append(tags,GLOBALS_FLAG);
+    dtw.string_array.append(tags,FDECLARE_FLAG);
+    dtw.string_array.append(tags,FDEFINE_FLAG);
 
-    CTextStack *final_compilation_linux = stack.newStack_string_format("gcc c/main.c -o %s",FINAL_OUPTUT_LINUX);
+    generate_code(STAGE_2_FOLDER,IMPORT_NAME,PROJECT_SHORT_CUT_DEFAULT,tags,true,DEFAULT_MAIN_C_NAME,NULL);
+    dtw.string_array.free(tags);
+
+
+    CTextStack *final_compilation_linux = stack.newStack_string_format("gcc stage2/c/main.c -o %s",FINAL_OUPTUT_LINUX);
     error = system(final_compilation_linux->rendered_text);
     stack.free(final_compilation_linux);
 
@@ -131,7 +132,7 @@ int main(){
         return error;
     }
 
-    CTextStack *final_compilation_windows = stack.newStack_string_format("x86_64-w64-mingw32-gcc  c/main.c -o %s",FINAL_OUPTUT_WINDOWS);
+    CTextStack *final_compilation_windows = stack.newStack_string_format("x86_64-w64-mingw32-gcc  stage2/c/main.c -o %s",FINAL_OUPTUT_WINDOWS);
     error = system(final_compilation_windows->rendered_text);
     stack.free(final_compilation_windows);
 

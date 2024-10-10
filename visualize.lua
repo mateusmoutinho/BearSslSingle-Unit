@@ -461,7 +461,7 @@ local function main()
 
             local new_name = "fdefine." .. current.path.get_name()
             current.path.set_name(new_name)
-            current.hardware_modify()
+            --current.hardware_modify()
         end
 
         if current.path.get_extension() == "h" then
@@ -469,10 +469,9 @@ local function main()
             --current.set_value(content)
             local new_name = "fdeclare." .. current.path.get_name()
             current.path.set_name(new_name)
-            current.hardware_modify()
+           -- current.hardware_modify()
         end
     end)
-
     src.commit()
 
     silver_chain.generate_code(

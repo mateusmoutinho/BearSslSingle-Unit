@@ -118,11 +118,11 @@ int main(){
     if(error){
         return error;
     }
-
+    /*
     CTextStack *final_compilation_windows = stack.newStack_string_format("x86_64-w64-mingw32-gcc  stage2/c/main.c -o %s",FINAL_OUPTUT_WINDOWS);
     error = system(final_compilation_windows->rendered_text);
     stack.free(final_compilation_windows);
-
+    */
 
 
 

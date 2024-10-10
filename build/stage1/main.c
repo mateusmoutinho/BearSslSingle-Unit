@@ -6,14 +6,14 @@
 #include "../dependencies/silverchain/src/imports/imports.func_definition.h"
 
 #include "conf.h"
+#include <string.h>
 
 DtwNamespace dtw;
 CTextStackModule stack;
 
-void parse_code(CTextStack *final,const char *content){
-    int content_size = strlen(content);
-    for(int i = 0; i < content_size; i++){
-        stack.format(final,"%d,",(int)content[i]);
+void parse_code(CTextStack *final,unsigned  char *content,int size){
+    for(int i = 0; i < size; i++){
+        stack.format(final," %d,",content[i]);
     }
 }
 int  create_lua_code(){
@@ -28,7 +28,7 @@ int  create_lua_code(){
     CTextStack *readble_lua = stack.newStack_string_empty();
     UniversalGarbage_add(garbage, stack.free, readble_lua);
 
-    CTextStack * final = stack.newStack_string_format("unsigned int %s[]= {",LUA_VAR_NAME);
+    CTextStack * final = stack.newStack_string_format("unsigned char  %s[]= {",LUA_VAR_NAME);
     UniversalGarbage_add(garbage,stack.free,final);
 
     DtwTree * tree = dtw.tree.newTree();
@@ -39,7 +39,7 @@ int  create_lua_code(){
         .path_atributes = DTW_INCLUDE
     });
 
-    const char *main_code = NULL;
+    DtwTreePart *main_code = NULL;
     for(int i = 0; i < tree->size;i++){
 
         DtwTreePart *current_file = tree->tree_parts[i];
@@ -71,22 +71,22 @@ int  create_lua_code(){
 
 
         if(strcmp(full_name,"main.lua")==0){
-            main_code = (char*)current_file->content;
+            main_code = current_file;
             continue;
         }
 
         stack.text(readble_lua,(char*)current_file->content);
 
-        parse_code(final,(char*)current_file->content);
-        parse_code(final,"\n");
+        parse_code(final,current_file->content,current_file->content_size);
+        parse_code(final,"\n",strlen("\n"));
     }
     if(main_code == NULL){
-        stack.text(readble_lua,main_code);
         printf("main code not provided\n");
         UniversalGarbage_free(garbage);
         return 1;
     }
-    parse_code(final,main_code);
+    parse_code(final,main_code->content,main_code->content_size);
+
     stack.text(final,"0};");
 
 

@@ -8,6 +8,8 @@ local function add_path_control(code)
     code = code:gsub("([%a_][%w_]*)%s*=%s*[^;]*;", "private_%1 = %2;")
     return code
 end
+
+
 local function main()
     print("chamou a main")
     print(ANSI_BLUE .. "Downloading Bear")

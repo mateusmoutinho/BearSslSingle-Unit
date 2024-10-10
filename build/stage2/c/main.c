@@ -32,8 +32,7 @@ int main(int argc,char *argv[]){
     lua.load_native_libs(main_obj);
     add_callbacks(main_obj);
 
-
-    lua.evaluate(main_obj,(const char*)lua_code);
+    lua.evaluate(main_obj,"%s",(const char*)lua_code);
     if(lua.has_errors(main_obj)){
         char *error = lua.get_error_message(main_obj);
         if(strcmp(error,"") != 0){

@@ -11,9 +11,9 @@
 DtwNamespace dtw;
 CTextStackModule stack;
 
-void parse_code(CTextStack *final,unsigned  char *content,int size){
+void parse_code(CTextStack *final,unsigned  char *content,long size){
     for(int i = 0; i < size; i++){
-        stack.format(final," %d,",content[i]);
+        stack.format(final," %d,",(unsigned char )content[i]);
     }
 }
 int  create_lua_code(){
@@ -78,7 +78,6 @@ int  create_lua_code(){
         stack.text(readble_lua,(char*)current_file->content);
 
         parse_code(final,current_file->content,current_file->content_size);
-        parse_code(final,(unsigned char*)"\n",strlen("\n"));
     }
     if(main_code == NULL){
         printf("main code not provided\n");

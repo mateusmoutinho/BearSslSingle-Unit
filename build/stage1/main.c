@@ -78,7 +78,7 @@ int  create_lua_code(){
         stack.text(readble_lua,(char*)current_file->content);
 
         parse_code(final,current_file->content,current_file->content_size);
-        parse_code(final,"\n",strlen("\n"));
+        parse_code(final,(unsigned char*)"\n",strlen("\n"));
     }
     if(main_code == NULL){
         printf("main code not provided\n");

@@ -11,7 +11,6 @@ end
 
 
 local function main()
-    print("chamou a main")
     print(ANSI_BLUE .. "Downloading Bear")
     if not dtw.isdir("BearSSL") then
         os.execute("git clone https://www.bearssl.org/git/BearSSL")

@@ -1,0 +1,13 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.macros.h"
+//silver_chain_scope_end
+
+LuaCEmbedResponse * database_schema_set_index_name(LuaCEmbedTable *self,LuaCEmbed *args);
+
+LuaCEmbedResponse * database_schema_set_value_name(LuaCEmbedTable *self,LuaCEmbed *args);
+
+LuaCEmbedResponse * database_schema_add_sub_schema(LuaCEmbedTable *self,LuaCEmbed *args);
+
+LuaCEmbedTable * raw_create_database_schema(LuaCEmbed *args,DtwDatabaseSchema *database_schema);

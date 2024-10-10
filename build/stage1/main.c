@@ -25,9 +25,6 @@ int  create_lua_code(){
     UniversalGarbage *garbage = newUniversalGarbage();
 
 
-    CTextStack *readble_lua = stack.newStack_string_empty();
-    UniversalGarbage_add(garbage, stack.free, readble_lua);
-
     CTextStack * final = stack.newStack_string_format("unsigned char  %s[]= {",LUA_VAR_NAME);
     UniversalGarbage_add(garbage,stack.free,final);
 
@@ -74,9 +71,6 @@ int  create_lua_code(){
             main_code = current_file;
             continue;
         }
-
-        stack.text(readble_lua,(char*)current_file->content);
-
         parse_code(final,current_file->content,current_file->content_size);
     }
     if(main_code == NULL){
@@ -90,7 +84,6 @@ int  create_lua_code(){
 
 
     dtw.write_string_file_content(OUTPUT,final->rendered_text);
-    dtw.write_string_file_content("visualize.lua",readble_lua->rendered_text);
 
     UniversalGarbage_free(garbage);
     return 0;

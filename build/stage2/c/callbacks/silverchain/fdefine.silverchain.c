@@ -36,7 +36,7 @@ LuaCEmbedResponse * lua_cembed_generate_code(LuaCEmbedTable *self,LuaCEmbed *arg
         dtw.string_array.append(tags,current);
     }
 
-    generate_code(src,imports,shortcut,tags,true,DEFAULT_MAIN_C_NAME,NULL);
+    generate_code(src,imports,shortcut,tags,true,"main.c",NULL);
     dtw.string_array.free(tags);
 
     return NULL;

@@ -10,7 +10,7 @@
 ---@field out_extension fun():string
 ---@field replace fun(content:string,target:string,value_to_replace:string):string
 ---@field trim fun(content:string):string
----@field split fun(content:string):string[]
+---@field split fun(content:string,target:string):string[]
 
 
 ---@type Clib

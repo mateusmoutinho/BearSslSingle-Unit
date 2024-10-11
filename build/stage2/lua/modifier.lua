@@ -15,22 +15,40 @@ local function collect_tokens(path)
 end
 
 ---@param part DtwTreePart
----@return Modifier[]
-function create_modifier(part)
+---@return Modifier
+local function newModifier(part)
     local self = {}
     self.tree_part = part
     self.tokens = collect_tokens(part.path.get_full_path())
 
+    self.create_sumary = function()
+        return {
+            original_path = self.tree_part.path.get_full_path(),
+            tokens = self.tokens
+        }
+    end
+
     return self
+end
+
+---@param modifiers Modifier[]
+function Create_summary(modifiers)
+    all = {}
+    for i = 1, #modifiers do
+        local current = modifiers[i]
+        all[#all + 1] = current.create_sumary()
+    end
+
+    json.dumps_to_file(all, "summary.json")
 end
 
 ---@param src DtwTree
 ---@return Modifier[]
-function create_modifiers(src)
+function Create_modifiers(src)
     return src.map(function(item)
         local extension = item.path.get_extension()
         if extension == "c" or extension == "h" then
-            return create_modifier()
+            return newModifier(item)
         end
     end)
 end

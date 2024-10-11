@@ -82,13 +82,14 @@ LuaCEmbedResponse * lua_trim(LuaCEmbedTable *self,LuaCEmbed *args){
 LuaCEmbedResponse * lua_split(LuaCEmbedTable *self,LuaCEmbed *args){
 
     char *content = lua.args.get_str(args,0);
+    char *target = lua.args.get_str(args,1);
 
     if(lua.has_errors(args)){
         char *error_msg = lua.get_error_message(args);
         return lua.response.send_error(error_msg);
     }
 
-    CTextArray *all =CTextArray_split(content,"\n");
+    CTextArray *all =CTextArray_split(content,target);
     LuaCEmbedTable *splited =lua.tables.new_anonymous_table(args);
     for(int i = 0; i < all->size;i++){
         lua.tables.append_string(splited,all->stacks[i]->rendered_text);

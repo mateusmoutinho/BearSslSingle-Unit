@@ -16,7 +16,7 @@ local function main()
         Aply_file_modification(main_replace_json, current)
     end)
     src.commit()
-    dtw.copy_any_overwriting("BearSSLSingleUnit/one.c", "one.c")
+    dtw.copy_any_overwriting("one.c", "BearSSLSingleUnit/one.c")
 
     silver_chain.generate_code(
         "Project/src",

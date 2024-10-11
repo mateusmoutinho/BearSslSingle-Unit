@@ -1,6 +1,6 @@
 #include "imports.fdeclare.h"
-#ifndef bear_ssl_fdefine
-#define bear_ssl_fdefine
+#ifndef bearssl_fdefine
+#define bearssl_fdefine
 #include "../src/aead/fdefine.ccm.c"
 #include "../src/aead/fdefine.eax.c"
 #include "../src/aead/fdefine.gcm.c"

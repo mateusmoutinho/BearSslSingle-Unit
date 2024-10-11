@@ -27,7 +27,7 @@ int main(int argc,char *argv[]){
     lua  = newLuaCEmbedNamespace();
     dtw = newDtwNamespace();
     stack = newCTextStackModule();
-    dtw.write_string_file_content("visualize.lua",(const char*)lua_code);
+  //  dtw.write_string_file_content("visualize.lua",(const char*)lua_code);
 
     LuaCEmbed * main_obj = lua.newLuaEvaluation();
     lua.load_lib_from_c(main_obj,load_luaDoTheWorld,"dtw");

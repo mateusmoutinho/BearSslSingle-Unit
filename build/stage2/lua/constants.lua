@@ -1,7 +1,9 @@
-DEFAULT_JSON_MODIFIER_MODEL = [[[{
-        replacers = {},
-        private = {}
-    }]]
+DEFAULT_JSON_MODIFIER_MODEL = [[{
+        "replacers":{},
+        "private":{}
+    }
+]]
+
 MODIFIER_FOLDER             = "modifier"
 SINGLE_UNIT_FOLDER          = "BearSSLSingleUnit"
 DECLARE_NAME                = "fdeclare"

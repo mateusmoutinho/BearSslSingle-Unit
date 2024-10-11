@@ -10,10 +10,11 @@ function Create_summary(modifiers)
 end
 
 ---@param modifiers Modifier[]
-function Generate_modifications(modifiers)
+---@param main_replace table
+function Generate_modifications(modifiers, main_replace)
     for i = 1, #modifiers do
         local current = modifiers[i]
-        current.generate_file_modifications(modifiers)
+        current.generate_file_modifications(modifiers, main_replace)
     end
 end
 

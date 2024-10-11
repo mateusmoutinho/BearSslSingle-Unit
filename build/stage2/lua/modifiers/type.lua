@@ -13,4 +13,4 @@
 ---@field create_sumary fun():Sumary
 ---@field is_defined fun(token:string):boolean
 ---@field resolve_redefinitions fun(all:Modifier[])
----@field generate_file_modifications fun(all:Modifier[])
+---@field generate_file_modifications fun(all:Modifier[],main_replace:table)

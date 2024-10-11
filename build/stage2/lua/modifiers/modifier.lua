@@ -48,7 +48,7 @@ function NewModifier(part)
         end
     end
     ---@param all Modifier[]
-    ---@param json_main_replacer tables
+    ---@param json_main_replacer table
     self.generate_file_modifications = function(all, json_main_replacer)
         self.resolve_redefinitions(all)
         local content = self.tree_part.get_value()
@@ -64,7 +64,7 @@ function NewModifier(part)
         self.tree_part.set_value(content)
         local single_unit_dir = dtw.concat_path(RELEASE_FODER, SINGLE_UNIT_FOLDER)
 
-        self.tree_part.path.replace_dirs("BearSSL/src", single_unit_dir)
+        self.tree_part.path.replace_dirs("BearSSL/src", dtw.concat_path(single_unit_dir, "src"))
         self.tree_part.hardware_write()
     end
 

@@ -1,4 +1,4 @@
-function Aply_main_replace(main_replace_json, content)
+function Aply_json_replace(main_replace_json, content)
     for key, value in pairs(main_replace_json) do
         content = content:gsub(key, value)
     end
@@ -14,7 +14,7 @@ function Generate_replace_model_path(path)
 end
 
 ---@param path string
-function create_json_replace_model_if_not_exist(path)
+function Create_json_replace_model_if_not_exist(path)
     if dtw.isfile(path) then
         return
     end

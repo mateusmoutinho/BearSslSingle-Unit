@@ -52,20 +52,7 @@ function NewModifier(part)
     ---@param json_main_replacer table
     self.generate_file_modifications = function(all, json_main_replacer)
         self.resolve_redefinitions(all)
-        local content = self.tree_part.get_value()
-        for key, value in pairs(json_main_replacer) do
-            content = content:gsub(key, value)
-        end
-        for i = 1, #self.tokens do
-            local current = self.tokens[i]
-            if current.replace then
-                content = content:gsub(current.value, current.replace)
-            end
-        end
-        self.tree_part.set_value(content)
         local single_unit_dir = dtw.concat_path(RELEASE_FODER, SINGLE_UNIT_FOLDER)
-
-        self.tree_part.path.replace_dirs("BearSSL/src", dtw.concat_path(single_unit_dir, "src"))
         local name = self.tree_part.path.get_name()
         local extension = self.tree_part.path.get_extension()
         if extension == "h" then
@@ -74,7 +61,26 @@ function NewModifier(part)
         if extension == "c" then
             self.tree_part.path.set_name(DEFINE_NAME .. "." .. name)
         end
+        self.tree_part.path.replace_dirs("BearSSL/src", dtw.concat_path(single_unit_dir, "src"))
+
         self.modified_path = self.tree_part.path.get_full_path()
+
+        local content = self.tree_part.get_value()
+
+        for key, value in pairs(json_main_replacer) do
+            content = clib.replace(content, key, value)
+        end
+        if extension == "c" then
+            for i = 1, #self.tokens do
+                local current = self.tokens[i]
+                if current.replace then
+                    content = clib.replace(content, current.value, current.replace)
+                end
+            end
+        end
+
+        self.tree_part.set_value(content)
+
         self.tree_part.hardware_write()
     end
 

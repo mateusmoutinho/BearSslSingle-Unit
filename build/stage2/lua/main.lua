@@ -5,31 +5,18 @@ local function main()
         os.execute("git clone https://www.bearssl.org/git/BearSSL")
     end
 
-    dtw.remove_any("Project")
-    dtw.copy_any_overwriting("BearSSL/inc", "Project/inc")
-    dtw.copy_any_overwriting("BearSSL/src", "Project/src")
+    dtw.remove_any("BearSSLSingleUnit")
+    dtw.copy_any_overwriting("BearSSL/inc", "BearSSLSingleUnit/inc")
+    dtw.copy_any_overwriting("BearSSL/src", "BearSSLSingleUnit/src")
 
-
-
-    local src = dtw.newTree_from_hardware("Project/src")
+    local src = dtw.newTree_from_hardware("BearSSLSingleUnit/src")
+    main_replace_json = json.load_from_file("main_replace.json")
 
     src.each(function(current)
-        if current.path.get_extension() == "c" then
-            local new_name = "fdefine." .. current.path.get_name()
-            current.path.set_name(new_name)
-            current.hardware_modify()
-        end
-
-        if current.path.get_extension() == "h" then
-            --  content = add_path_control(current.get_value())
-            --current.set_value(content)
-            current.get_value()
-            local new_name = "fdeclare." .. current.path.get_name()
-            current.path.set_name(new_name)
-            current.hardware_modify()
-        end
+        Aply_file_modification(main_replace_json, current)
     end)
     src.commit()
+    dtw.copy_any_overwriting("BearSSLSingleUnit/one.c", "one.c")
 
     silver_chain.generate_code(
         "Project/src",

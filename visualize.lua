@@ -241,7 +241,38 @@ ANSI_YELLOW = "\x1b[33m"
 ANSI_BLUE = "\x1b[34m"
 ANSI_MAGENTA= "\x1b[35m"
 ANSI_CYAN= "\x1b[36m"
-ANSI_RESET ="\x1b[0m"
+ANSI_RESET ="\x1b[0m"---@param json_main_replacer table
+---@param file DtwTreePart
+function Aply_file_modification(json_main_replacer, file)
+    local is_c_file = false
+    if file.path.get_extension() == "c" then
+        is_c_file = true
+        local new_name = "fdefine." .. file.path.get_name()
+        file.path.set_name(new_name)
+        file.hardware_modify()
+    end
+
+    if file.path.get_extension() == "h" then
+        is_c_file = true
+        file.get_value()
+        local new_name = "fdeclare." .. file.path.get_name()
+        file.path.set_name(new_name)
+        file.hardware_modify()
+    end
+
+    if is_c_file then
+        local content = file.get_value()
+        local formmated = Aply_main_replace(main_replace_json, content)
+        file.set_value(formmated)
+    end
+end
+function Aply_main_replace(main_replace_json, content)
+    for key, value in pairs(main_replace_json) do
+        content = content:gsub(key, value)
+    end
+    return content
+end
+
 
 ---@class Clib
 ---@field load_string fun(path:string):string
@@ -258,6 +289,17 @@ ANSI_RESET ="\x1b[0m"
 
 ---@type Clib
 clib = clib
+---@class LuaFluidJson
+---@field load_from_string fun(str:string): any
+---@field load_from_file fun(str:string):any
+---@field dumps_to_string fun(entry:table,ident:boolean| nil): string
+---@field dumps_to_file fun(entry:table,output:string,ident:boolean|nil)
+---@field is_table_a_object fun(element:table):boolean
+---@field set_null_code fun(null_code:string)
+
+
+---@type LuaFluidJson
+json = json
 
 
 ---@class DtwTreePart
@@ -444,25 +486,11 @@ local function main()
     dtw.copy_any_overwriting("BearSSL/inc", "Project/inc")
     dtw.copy_any_overwriting("BearSSL/src", "Project/src")
 
-
-
     local src = dtw.newTree_from_hardware("Project/src")
+    main_replace_json = json.load_from_file("main_replace.json")
 
     src.each(function(current)
-        if current.path.get_extension() == "c" then
-            local new_name = "fdefine." .. current.path.get_name()
-            current.path.set_name(new_name)
-            current.hardware_modify()
-        end
-
-        if current.path.get_extension() == "h" then
-            --  content = add_path_control(current.get_value())
-            --current.set_value(content)
-            current.get_value()
-            local new_name = "fdeclare." .. current.path.get_name()
-            current.path.set_name(new_name)
-            current.hardware_modify()
-        end
+        Aply_file_modification(main_replace_json, current)
     end)
     src.commit()
 

@@ -1,10 +1,8 @@
--- Função para adicionar o prefixo "private_"
-local function add_path_control(code)
-    -- Adicionar "private_" a nomes de funções globais
-    code = code:gsub("([%a_][%w_]*)%s*%(", "private_%1(")
+r = {
+    a = "aaa",
+    v = "aaa"
+}
 
-    -- Adicionar "private_" a variáveis globais
-    code = code:gsub("([%a_][%w_]*)%s*;", "private_%1;")
-    code = code:gsub("([%a_][%w_]*)%s*=%s*[^;]*;", "private_%1 = %2;")
-    return code
+for i, h in pairs(r) do
+    print(i, h)
 end

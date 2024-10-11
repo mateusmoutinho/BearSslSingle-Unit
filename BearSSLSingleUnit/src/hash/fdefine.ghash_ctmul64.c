@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /*
  * Copyright (c) 2016 Thomas Pornin <pornin@bolet.org>
  *
@@ -22,7 +27,7 @@
  * SOFTWARE.
  */
 
-#include "inner.h"
+
 
 /*
  * This is the 64-bit variant of br_ghash_ctmul32(), with 64-bit operands

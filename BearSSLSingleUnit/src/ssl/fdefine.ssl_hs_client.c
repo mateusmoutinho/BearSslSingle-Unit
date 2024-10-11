@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /* Automatically generated code; do not modify directly. */
 
 #include <stddef.h>
@@ -70,7 +75,7 @@ void br_ssl_hs_client_run(void *t0ctx);
 #include <stddef.h>
 #include <string.h>
 
-#include "inner.h"
+
 
 /*
  * This macro evaluates to a pointer to the current engine context.

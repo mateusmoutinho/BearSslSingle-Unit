@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /*
  * Copyright (c) 2017 Thomas Pornin <pornin@bolet.org>
  *
@@ -22,7 +27,7 @@
  * SOFTWARE.
  */
 
-#include "inner.h"
+
 
 /*
  * This is a "reference" implementation of Poly1305 that uses the

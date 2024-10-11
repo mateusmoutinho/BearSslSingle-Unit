@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /*
  * Copyright (c) 2016 Thomas Pornin <pornin@bolet.org>
  *
@@ -22,7 +27,7 @@
  * SOFTWARE.
  */
 
-#include "inner.h"
+
 
 static int
 se_choose(const br_ssl_server_policy_class **pctx,

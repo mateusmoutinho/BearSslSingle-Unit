@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /*
  * Copyright (c) 2017 Thomas Pornin <pornin@bolet.org>
  *
@@ -23,7 +28,7 @@
  */
 
 #define BR_POWER_ASM_MACROS   1
-#include "inner.h"
+
 
 #if BR_POWER8
 

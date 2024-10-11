@@ -19,8 +19,8 @@ local function main()
     dtw.copy_any_overwriting("one.c", "BearSSLSingleUnit/one.c")
 
     silver_chain.generate_code(
-        "Project/src",
-        "Project/imports",
+        "BearSSLSingleUnit/src",
+        "BearSSLSingleUnit/imports",
         "bear_ssl",
         { "bear", "fdeclare", "fdefine" }
     )

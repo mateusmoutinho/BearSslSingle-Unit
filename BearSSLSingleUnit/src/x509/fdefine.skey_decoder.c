@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /* Automatically generated code; do not modify directly. */
 
 #include <stddef.h>
@@ -67,13 +72,13 @@ void br_skey_decoder_run(void *t0ctx);
 
 
 
-#include "inner.h"
 
 
 
 
 
-#include "inner.h"
+
+
 
 #define CTX   ((br_skey_decoder_context *)(void *)((unsigned char *)t0ctx - offsetof(br_skey_decoder_context, cpu)))
 #define CONTEXT_NAME   br_skey_decoder_context

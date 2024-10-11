@@ -1,3 +1,8 @@
+
+//silver_chain_scope_start
+//mannaged by silver chain
+#include "../../imports/imports.fdeclare.h"
+//silver_chain_scope_end
 /* Automatically generated code; do not modify directly. */
 
 #include <stddef.h>
@@ -67,13 +72,13 @@ void br_x509_minimal_run(void *t0ctx);
 
 
 
-#include "inner.h"
 
 
 
 
 
-#include "inner.h"
+
+
 
 /*
  * Implementation Notes

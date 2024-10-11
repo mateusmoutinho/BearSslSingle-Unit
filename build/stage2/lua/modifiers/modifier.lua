@@ -65,6 +65,14 @@ function NewModifier(part)
         local single_unit_dir = dtw.concat_path(RELEASE_FODER, SINGLE_UNIT_FOLDER)
 
         self.tree_part.path.replace_dirs("BearSSL/src", dtw.concat_path(single_unit_dir, "src"))
+        local name = self.tree_part.path.get_name()
+        local extension = self.tree_part.path.get_extension()
+        if extension == "h" then
+            self.tree_part.path.set_name(DECLARE_NAME .. "." .. name)
+        end
+        if extension == "c" then
+            self.tree_part.path.set_name(DEFINE_NAME .. "." .. name)
+        end
         self.tree_part.hardware_write()
     end
 

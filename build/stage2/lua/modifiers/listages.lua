@@ -6,7 +6,7 @@ function Create_summary(modifiers)
         all[#all + 1] = current.create_sumary()
     end
 
-    json.dumps_to_file(all, "summary.json")
+    json.dumps_to_file(all, dtw.concat_path(RELEASE_FODER, "sumary_src.json"))
 end
 
 ---@param modifiers Modifier[]

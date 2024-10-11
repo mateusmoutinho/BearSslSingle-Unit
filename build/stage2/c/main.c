@@ -31,6 +31,7 @@ int main(int argc,char *argv[]){
 
     LuaCEmbed * main_obj = lua.newLuaEvaluation();
     lua.load_lib_from_c(main_obj,load_luaDoTheWorld,"dtw");
+    lua.load_lib_from_c(main_obj,load_lua,"json");
     lua.load_native_libs(main_obj);
     add_callbacks(main_obj);
     lua.evaluate(main_obj,"%s",(const char*)lua_code);

@@ -26,35 +26,4 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	6.0.0	//
-F256	BearSSL/src/ec/ec_p256_m15.c	/^static const uint32_t F256[] = {$/;"	v	typeref:typename:const uint32_t[]	file:
-Gwin	BearSSL/src/ec/ec_p256_m15.c	/^static const uint32_t Gwin[15][20] = {$/;"	v	typeref:typename:const uint32_t[15][20]	file:
-P256_B	BearSSL/src/ec/ec_p256_m15.c	/^static const uint32_t P256_B[] = {$/;"	v	typeref:typename:const uint32_t[]	file:
-P256_G	BearSSL/src/ec/ec_p256_m15.c	/^static const unsigned char P256_G[] = {$/;"	v	typeref:typename:const unsigned char[]	file:
-P256_N	BearSSL/src/ec/ec_p256_m15.c	/^static const unsigned char P256_N[] = {$/;"	v	typeref:typename:const unsigned char[]	file:
-__anone10415050108	BearSSL/src/ec/ec_p256_m15.c	/^typedef struct {$/;"	s	file:
-api_generator	BearSSL/src/ec/ec_p256_m15.c	/^api_generator(int curve, size_t *len)$/;"	f	typeref:typename:const unsigned char *	file:
-api_mul	BearSSL/src/ec/ec_p256_m15.c	/^api_mul(unsigned char *G, size_t Glen,$/;"	f	typeref:typename:uint32_t	file:
-api_muladd	BearSSL/src/ec/ec_p256_m15.c	/^api_muladd(unsigned char *A, const unsigned char *B, size_t len,$/;"	f	typeref:typename:uint32_t	file:
-api_mulgen	BearSSL/src/ec/ec_p256_m15.c	/^api_mulgen(unsigned char *R,$/;"	f	typeref:typename:size_t	file:
-api_order	BearSSL/src/ec/ec_p256_m15.c	/^api_order(int curve, size_t *len)$/;"	f	typeref:typename:const unsigned char *	file:
-api_xoff	BearSSL/src/ec/ec_p256_m15.c	/^api_xoff(int curve, size_t *len)$/;"	f	typeref:typename:size_t	file:
-be8_to_le13	BearSSL/src/ec/ec_p256_m15.c	/^be8_to_le13(uint32_t *dst, const unsigned char *src, size_t len)$/;"	f	typeref:typename:uint32_t	file:
-br_ec_p256_m15	BearSSL/src/ec/ec_p256_m15.c	/^const br_ec_impl br_ec_p256_m15 = {$/;"	v	typeref:typename:const br_ec_impl
-le13_to_be8	BearSSL/src/ec/ec_p256_m15.c	/^le13_to_be8(unsigned char *dst, size_t len, const uint32_t *src)$/;"	f	typeref:typename:void	file:
-lookup_Gwin	BearSSL/src/ec/ec_p256_m15.c	/^lookup_Gwin(p256_jacobian *T, uint32_t idx)$/;"	f	typeref:typename:void	file:
-mul20	BearSSL/src/ec/ec_p256_m15.c	/^mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)$/;"	f	typeref:typename:void	file:
-mul_f256	BearSSL/src/ec/ec_p256_m15.c	/^mul_f256(uint32_t *d, const uint32_t *a, const uint32_t *b)$/;"	f	typeref:typename:void	file:
-norm13	BearSSL/src/ec/ec_p256_m15.c	/^norm13(uint32_t *d, const uint32_t *w, size_t len)$/;"	f	typeref:typename:uint32_t	file:
-p256_add	BearSSL/src/ec/ec_p256_m15.c	/^p256_add(p256_jacobian *P1, const p256_jacobian *P2)$/;"	f	typeref:typename:uint32_t	file:
-p256_add_mixed	BearSSL/src/ec/ec_p256_m15.c	/^p256_add_mixed(p256_jacobian *P1, const p256_jacobian *P2)$/;"	f	typeref:typename:uint32_t	file:
-p256_decode	BearSSL/src/ec/ec_p256_m15.c	/^p256_decode(p256_jacobian *P, const void *src, size_t len)$/;"	f	typeref:typename:uint32_t	file:
-p256_double	BearSSL/src/ec/ec_p256_m15.c	/^p256_double(p256_jacobian *Q)$/;"	f	typeref:typename:void	file:
-p256_encode	BearSSL/src/ec/ec_p256_m15.c	/^p256_encode(void *dst, const p256_jacobian *P)$/;"	f	typeref:typename:void	file:
-p256_jacobian	BearSSL/src/ec/ec_p256_m15.c	/^} p256_jacobian;$/;"	t	typeref:struct:__anone10415050108	file:
-p256_mul	BearSSL/src/ec/ec_p256_m15.c	/^p256_mul(p256_jacobian *P, const unsigned char *x, size_t xlen)$/;"	f	typeref:typename:void	file:
-p256_mulgen	BearSSL/src/ec/ec_p256_m15.c	/^p256_mulgen(p256_jacobian *P, const unsigned char *x, size_t xlen)$/;"	f	typeref:typename:void	file:
-p256_to_affine	BearSSL/src/ec/ec_p256_m15.c	/^p256_to_affine(p256_jacobian *P)$/;"	f	typeref:typename:void	file:
-reduce_f256	BearSSL/src/ec/ec_p256_m15.c	/^reduce_f256(uint32_t *d)$/;"	f	typeref:typename:void	file:
-reduce_final_f256	BearSSL/src/ec/ec_p256_m15.c	/^reduce_final_f256(uint32_t *d)$/;"	f	typeref:typename:uint32_t	file:
-square20	BearSSL/src/ec/ec_p256_m15.c	/^square20(uint32_t *d, const uint32_t *a)$/;"	f	typeref:typename:void	file:
-square_f256	BearSSL/src/ec/ec_p256_m15.c	/^square_f256(uint32_t *d, const uint32_t *a)$/;"	f	typeref:typename:void	file:
+br_x509_minimal_init_full	BearSSL/src/x509/x509_minimal_full.c	/^br_x509_minimal_init_full(br_x509_minimal_context *xc,$/;"	f	typeref:typename:void

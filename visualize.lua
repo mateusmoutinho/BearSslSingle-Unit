@@ -433,12 +433,6 @@ clib = clib
 ---@type DtwModule
 dtw = dtw---@class silver_chain
 ---@field generate_code fun(src:string,imports:string,shortcut:string,flags:table,main_file:string|nil,main_path:string|nil)
--- Função para adicionar o prefixo "private_"
-local function add_path_control(code)
-    return code
-end
-
-
 local function main()
     print(ANSI_BLUE .. "Downloading Bear")
 
@@ -454,22 +448,20 @@ local function main()
 
     local src = dtw.newTree_from_hardware("Project/src")
 
-    src.map(function(current)
+    src.each(function(current)
         if current.path.get_extension() == "c" then
-            local content = add_path_control(current.get_value())
-            current.set_value(content)
-
             local new_name = "fdefine." .. current.path.get_name()
             current.path.set_name(new_name)
-            --current.hardware_modify()
+            current.hardware_modify()
         end
 
         if current.path.get_extension() == "h" then
             --  content = add_path_control(current.get_value())
             --current.set_value(content)
+            current.get_value()
             local new_name = "fdeclare." .. current.path.get_name()
             current.path.set_name(new_name)
-           -- current.hardware_modify()
+            current.hardware_modify()
         end
     end)
     src.commit()

@@ -161,7 +161,7 @@ LuaCEmbedResponse *tree_foreach(LuaCEmbedTable *self, LuaCEmbed *args){
         LuaCEmbedTable *tree_part = create_tree_part_reference(args,self_tree->tree_parts[i]);
         LuaCEmbedTable *args_to_call = LuaCembed_new_anonymous_table(args);
         LuaCEmbedTable_append_table(args_to_call,tree_part);
-        LuaCEmbed_run_args_lambda(args,0,args_to_call,1);
+        LuaCEmbed_run_args_lambda(args,0,args_to_call,0);
         if(LuaCEmbed_has_errors(args)){
             char *error_msg = LuaCEmbed_get_error_message(args);
             printf("pegou aqui\n");

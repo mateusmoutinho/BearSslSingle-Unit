@@ -23,6 +23,7 @@ void add_callbacks(LuaCEmbed *main_obj){
 
 
 int main(int argc,char *argv[]){
+
     lua  = newLuaCEmbedNamespace();
     dtw = newDtwNamespace();
     stack = newCTextStackModule();

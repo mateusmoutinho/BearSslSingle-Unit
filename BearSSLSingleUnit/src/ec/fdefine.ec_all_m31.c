@@ -30,7 +30,7 @@
 
 
 static const unsigned char *
-api_generator(int curve, size_t *len)
+private_ec_all_m31api_generator(int curve, size_t *len)
 {
 	switch (curve) {
 	case BR_EC_secp256r1:
@@ -51,7 +51,7 @@ api_generator(int curve, size_t *len)
 }
 
 static const unsigned char *
-api_order(int curve, size_t *len)
+private_ec_all_m31api_order(int curve, size_t *len)
 {
 	switch (curve) {
 	case BR_EC_secp256r1:
@@ -72,7 +72,7 @@ api_order(int curve, size_t *len)
 }
 
 static size_t
-api_xoff(int curve, size_t *len)
+private_ec_all_m31api_xoff(int curve, size_t *len)
 {
 	switch (curve) {
 	case BR_EC_secp256r1:
@@ -93,7 +93,7 @@ api_xoff(int curve, size_t *len)
 }
 
 static uint32_t
-api_mul(unsigned char *G, size_t Glen,
+private_ec_all_m31api_mul(unsigned char *G, size_t Glen,
 	const unsigned char *kb, size_t kblen, int curve)
 {
 	switch (curve) {
@@ -115,7 +115,7 @@ api_mul(unsigned char *G, size_t Glen,
 }
 
 static size_t
-api_mulgen(unsigned char *R,
+private_ec_all_m31private_ec_all_m31api_mulgen(unsigned char *R,
 	const unsigned char *x, size_t xlen, int curve)
 {
 	switch (curve) {
@@ -137,7 +137,7 @@ api_mulgen(unsigned char *R,
 }
 
 static uint32_t
-api_muladd(unsigned char *A, const unsigned char *B, size_t len,
+private_ec_all_m31private_ec_all_m31api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 	const unsigned char *x, size_t xlen,
 	const unsigned char *y, size_t ylen, int curve)
 {
@@ -167,10 +167,10 @@ api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 /* see bearssl_ec.h */
 const br_ec_impl br_ec_all_m31 = {
 	(uint32_t)0x23800000,
-	&api_generator,
-	&api_order,
-	&api_xoff,
-	&api_mul,
-	&api_mulgen,
-	&api_muladd
+	&private_ec_all_m31api_generator,
+	&private_ec_all_m31api_order,
+	&private_ec_all_m31api_xoff,
+	&private_ec_all_m31api_mul,
+	&private_ec_all_m31private_ec_all_m31api_mulgen,
+	&private_ec_all_m31private_ec_all_m31api_muladd
 };

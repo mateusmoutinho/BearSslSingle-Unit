@@ -33,9 +33,13 @@ function Aply_json_modifier(json_modifier_path, content)
     local json_modifier = json.load_from_file(json_modifier_path)
 
     local private_name = "private_" .. json_modifier["name"]
-
-    for i = 1, #json_modifier['private'] do
-        content = clib.replace()
+    local private_replace = json_modifier['private']
+    for i = 1, #private_replace do
+        local name_to_replace = private_replace[i]
+        local new_name        = private_name .. name_to_replace
+        content               = clib.replace(content, name_to_replace, new_name)
     end
+    content = Aply_json_replace(json_modifier["replacers"], content)
+
     return content
 end

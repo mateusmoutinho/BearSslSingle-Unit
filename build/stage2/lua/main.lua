@@ -6,7 +6,9 @@ local function main()
     end
     local main_replace = json.load_from_file("main_replace.json")
     local src = dtw.newTree_from_hardware("BearSSL/src")
-    local modifiers = Generate_modifications(src)
+
+    local modifiers = Create_modifiers(src)
+    Generate_modifications(modifiers)
     src.commit()
     --collect_tags()
     local single_unit_dir = dtw.concat_path(RELEASE_FODER, SINGLE_UNIT_FOLDER)

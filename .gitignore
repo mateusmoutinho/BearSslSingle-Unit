@@ -43,7 +43,7 @@ summary.json
 *.su
 *.idb
 *.pdb
-
+release
 # Kernel Module Compile Results
 *.mod*
 *.cmd

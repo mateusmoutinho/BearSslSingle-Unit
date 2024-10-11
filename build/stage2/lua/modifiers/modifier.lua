@@ -8,6 +8,7 @@ function NewModifier(part)
     self.create_sumary = function()
         return {
             original_path = self.tree_part.path.get_full_path(),
+            modified_path = self.modified_path,
             tokens = self.tokens
         }
     end
@@ -73,6 +74,7 @@ function NewModifier(part)
         if extension == "c" then
             self.tree_part.path.set_name(DEFINE_NAME .. "." .. name)
         end
+        self.modified_path = self.tree_part.path.get_full_path()
         self.tree_part.hardware_write()
     end
 

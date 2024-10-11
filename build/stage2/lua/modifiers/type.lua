@@ -4,10 +4,12 @@
 
 ---@class Sumary
 ---@field original_path string
+---@field modified_path string
 ---@field tokens Token
 
 
 ---@class Modifier
+---@field modified_path string
 ---@field tree_part DtwTreePart
 ---@field tokens Token[]
 ---@field create_sumary fun():Sumary

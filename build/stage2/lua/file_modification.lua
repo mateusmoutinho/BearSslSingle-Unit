@@ -18,8 +18,8 @@ function Aply_file_modification(json_main_replacer, file)
     end
 
     if is_c_file then
-        json_modifier_path = Generate_replace_model_path(file.path)
-        Create_json_replace_model_if_not_exist(json_modifier_path)
+        json_modifier_path = Generate_mdifier_model_path(file.path)
+        Create_json_modifier_model_if_not_exist(json_modifier_path)
         local content = file.get_value()
         local formmated = Aply_json_replace(main_replace_json, content)
         file.set_value(formmated)

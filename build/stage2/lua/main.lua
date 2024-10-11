@@ -24,4 +24,3 @@ local function main()
     )
 end
 main()
-main()

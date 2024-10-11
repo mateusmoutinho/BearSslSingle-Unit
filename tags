@@ -34,10 +34,4 @@
 !_TAG_ROLE_DESCRIPTION!C!header	local	/local header/
 !_TAG_ROLE_DESCRIPTION!C!header	system	/system header/
 !_TAG_ROLE_DESCRIPTION!C!macro	undef	/undefined/
-api_generator	BearSSL/src/ec/ec_all_m31.c	/^api_generator(int curve, size_t *len)$/;"	f	typeref:typename:const unsigned char *	file:
-api_mul	BearSSL/src/ec/ec_all_m31.c	/^api_mul(unsigned char *G, size_t Glen,$/;"	f	typeref:typename:uint32_t	file:
-api_muladd	BearSSL/src/ec/ec_all_m31.c	/^api_muladd(unsigned char *A, const unsigned char *B, size_t len,$/;"	f	typeref:typename:uint32_t	file:
-api_mulgen	BearSSL/src/ec/ec_all_m31.c	/^api_mulgen(unsigned char *R,$/;"	f	typeref:typename:size_t	file:
-api_order	BearSSL/src/ec/ec_all_m31.c	/^api_order(int curve, size_t *len)$/;"	f	typeref:typename:const unsigned char *	file:
-api_xoff	BearSSL/src/ec/ec_all_m31.c	/^api_xoff(int curve, size_t *len)$/;"	f	typeref:typename:size_t	file:
-br_ec_all_m31	BearSSL/src/ec/ec_all_m31.c	/^const br_ec_impl br_ec_all_m31 = {$/;"	v	typeref:typename:const br_ec_impl
+br_x509_minimal_init_full	BearSSL/src/x509/x509_minimal_full.c	/^br_x509_minimal_init_full(br_x509_minimal_context *xc,$/;"	f	typeref:typename:void

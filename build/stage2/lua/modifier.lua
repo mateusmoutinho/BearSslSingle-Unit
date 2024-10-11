@@ -7,11 +7,15 @@ local function collect_tokens(path)
     all_elements = {}
     for i = 1, #lines do
         local current = lines[i]
-        if clib.get_char(current, 0) ~= "!" then
+        if clib.get_char(current, 1) ~= "!" then
             local token = {}
-            token.value = clib.split(current, " ")[0]
+            token.value = clib.split(current, "\t")[1]
+            if token.value ~= "" then
+                all_elements[#all_elements + 1] = token
+            end
         end
     end
+    return all_elements
 end
 
 ---@param part DtwTreePart

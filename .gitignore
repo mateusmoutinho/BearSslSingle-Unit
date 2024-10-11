@@ -3,6 +3,7 @@
 BearSSL
 Project
 # Object files
+summary.json
 *.o
 *.ko
 *.obj

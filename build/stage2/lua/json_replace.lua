@@ -10,9 +10,9 @@ end
 function Generate_mdifier_model_path(path)
     local copy_path = dtw.newPath(path.get_full_path())
     copy_path.replace_dirs(SINGLE_UNIT_FOLDER, MODIFIER_FOLDER)
-    local name = path.get_name()
-    name = name:gsub(".c", ".json")
-    name = name:gsub(".h", ".json")
+
+    local name = copy_path.get_name()
+    name = clib.replace(name, ".c", ".json")
     copy_path.set_name(name)
     return copy_path.get_full_path()
 end

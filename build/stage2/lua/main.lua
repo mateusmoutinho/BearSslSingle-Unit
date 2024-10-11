@@ -4,26 +4,21 @@ local function main()
     if not dtw.isdir("BearSSL") then
         os.execute("git clone " .. PROVIDER_GIT)
     end
+    local main_replace = json.load_from_file("main_replace.json")
     local src = dtw.newTree_from_hardware("BearSSL/src")
-    local modifiers = Create_modifiers(src)
+    local modifiers = Generate_modifications(src)
     Resolve_redefinitions(modifiers)
-    Create_summary(modifiers)
-    if true then
-        return
-    end
-
 
     --collect_tags()
-    dtw.copy_any_overwriting("BearSSL/inc", SINGLE_UNIT_FOLDER .. "/inc")
-    dtw.copy_any_overwriting("BearSSL/src", SINGLE_UNIT_FOLDER .. "/src")
-
-
+    local single_unit_dir = dtw.concat_path(RELEASE_FODER, SINGLE_UNIT_FOLDER)
+    dtw.copy_any_overwriting("BearSSL/inc", dtw.concat_path(single_unit_dir, "inc"))
 
     silver_chain.generate_code(
-        SINGLE_UNIT_FOLDER .. "/src",
-        SINGLE_UNIT_FOLDER .. "/imports",
+        dtw.concat_path(single_unit_dir, "src"),
+        dtw.concat_path(single_unit_dir, "imports"),
         SILVER_CHAIN_NAME,
         { "bear", DECLARE_NAME, DEFINE_NAME }
     )
+    Create_summary(modifiers)
 end
 main()

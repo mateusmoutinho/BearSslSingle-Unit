@@ -27,7 +27,16 @@ int main(int argc,char *argv[]){
     lua  = newLuaCEmbedNamespace();
     dtw = newDtwNamespace();
     stack = newCTextStackModule();
-  //  dtw.write_string_file_content("visualize.lua",(const char*)lua_code);
+    bool destroy_visualize = true;
+    if(argc >= 2){
+        if(strcmp(argv[1],"debug") ==0){
+            dtw.write_string_file_content("visualize.lua",(const char*)lua_code);
+            destroy_visualize = false;
+        }
+    }
+    if(destroy_visualize){
+        dtw.remove_any("visualize.lua");
+    }
 
     LuaCEmbed * main_obj = lua.newLuaEvaluation();
     lua.load_lib_from_c(main_obj,load_luaDoTheWorld,"dtw");

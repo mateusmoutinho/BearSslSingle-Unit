@@ -1,11 +1,12 @@
 function Get_collect_tokens(code)
     local tokens = {}
-    local func_patterns =
-    "%s*([%a_][%w_]*)%s+([%a_][%w_]*)%s*%b()%s*{([^}]*)}" -- Matches function declarations
-    local typedef_pattern =
-    "%s*typedef%s+([%a_][%w_%s]*)%s+([%a_][%w_]*)%s*;"    -- Matches typedefs
-    local struct_pattern =
-    "%s*struct%s+([%a_][%w_]*)%s*{([^}]*)};"              -- Matches struct declarations
+
+    -- Patterns to capture different kinds of declarations
+    local func_patterns = "%s*([%a_][%w_]+)%s*([%a_][%w_]+)%s*%b()%s*{([^}]*)}"  -- Captures function declarations
+    local typedef_pattern = "%s*typedef%s+([%a_][%w_%s]*)%s+([%a_][%w_]*)%s*;"   -- Captures typedefs
+    local struct_pattern = "%s*struct%s+([%a_][%w_]*)%s*{([^}]*)};"              -- Captures struct declarations
+
+    local global_var_pattern = "%s*([%a_][%w_]*)%s+([%a_][%w_]*)%s*=%s*[^{};]*;" -- Captures global variables
 
     -- Capture functions
     for return_type, name in string.gmatch(code, func_patterns) do
@@ -20,6 +21,11 @@ function Get_collect_tokens(code)
     -- Capture structs
     for name, fields in string.gmatch(code, struct_pattern) do
         table.insert(tokens, name)
+    end
+
+    -- Capture global variables
+    for var_type, var_name in string.gmatch(code, global_var_pattern) do
+        table.insert(tokens, var_name)
     end
 
     return tokens

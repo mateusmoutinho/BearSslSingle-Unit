@@ -74,7 +74,7 @@ function NewModifier(part)
             for i = 1, #self.tokens do
                 local current = self.tokens[i]
                 if current.replace then
-                    content = clib.replace(content, current.value, current.replace)
+                  --  content = clib.replace(content, current.value, current.replace)
                 end
             end
         end

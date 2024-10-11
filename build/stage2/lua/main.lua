@@ -5,8 +5,9 @@ local function main()
         os.execute("git clone " .. PROVIDER_GIT)
     end
 
-    collect_tags()
-    [[
+
+        --collect_tags()
+        [[
     dtw.remove_any(SINGLE_UNIT_FOLDER)
     dtw.copy_any_overwriting("BearSSL/inc", SINGLE_UNIT_FOLDER .. "/inc")
     dtw.copy_any_overwriting("BearSSL/src", SINGLE_UNIT_FOLDER .. "/src")

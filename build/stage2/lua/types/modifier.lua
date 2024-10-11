@@ -1,0 +1,3 @@
+---@class Modifier
+---@field tree_part DtwTreePart
+---@field type_elements string[]

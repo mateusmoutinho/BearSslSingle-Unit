@@ -26,3 +26,13 @@ function Create_json_modifier_model_if_not_exist(path)
 
     dtw.write_file(path, DEFAULT_JSON_MODIFIER_MODEL)
 end
+
+function Aply_json_modifier(json_modifier_path, content)
+    local json_modifier = json.load_from_file(json_modifier_path)
+    local private_name = "private_" .. dtw.newPath(json_modifier_path).get_only_name()
+    for i = 1, json_modifier['private'] do
+        new_name = private_name .. json_modifier[i]
+        print(new_name)
+    end
+    return content
+end

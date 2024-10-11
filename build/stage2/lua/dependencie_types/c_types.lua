@@ -1,5 +1,3 @@
-
-
 ---@class Clib
 ---@field load_string fun(path:string):string
 ---@field get_char fun(path:string,i:number):string
@@ -12,6 +10,8 @@
 ---@field out_extension fun():string
 ---@field replace fun(content:string,target:string,value_to_replace:string):string
 ---@field trim fun(content:string):string
+---@field split fun(content:string):string[]
+
 
 ---@type Clib
 clib = clib

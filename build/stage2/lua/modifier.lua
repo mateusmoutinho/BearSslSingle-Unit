@@ -1,9 +1,17 @@
 ---@param path string
----@return string[]
-function collect_tags(path)
+---@return Token[]
+local function collect_tokens(path)
     os.execute("ctags -R " .. path)
     local content = dtw.load_file("tags")
-    lines = clib.split(content)
+    lines = clib.split(content, "\n")
+    all_elements = {}
+    for i = 1, #lines do
+        local current = lines[i]
+        if clib.get_char(current, 0) ~= "!" then
+            local token = {}
+            token.value = clib.split(current, " ")[0]
+        end
+    end
 end
 
 ---@param part DtwTreePart
@@ -11,7 +19,8 @@ end
 function create_modifier(part)
     local self = {}
     self.tree_part = part
-    self.type_elements = collect_tags(part.path.get_full_path())
+    self.tokens = collect_tokens(part.path.get_full_path())
+
     return self
 end
 

@@ -1,12 +1,10 @@
 -- Função que detecta declarações de funções em C
-function detectar_funcoes_c(codigo)
+function detect_function(codigo)
     -- Expressão regular para capturar declarações de funções
     local padrao =
-    "%s*([%a_][%w_]*)%s+([%a_][%w_]*)%s*%b()"                -- captura tipo, nome da função, e os parâmetros entre parênteses
-
+    "%s*([%a_][%w_]*)%s+([%a_][%w_]*)%s*%b()" -- captura tipo, nome da função, e os parâmetros entre parênteses
     -- Tabela para armazenar as funções encontradas
     local funcoes = {}
-
     -- Itera sobre todas as correspondências no código-fonte
     for tipo, nome in string.gmatch(codigo, padrao) do
         table.insert(funcoes, { tipo = tipo, nome = nome })

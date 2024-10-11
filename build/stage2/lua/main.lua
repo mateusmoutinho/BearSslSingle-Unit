@@ -6,6 +6,7 @@ local function main()
     end
     local src = dtw.newTree_from_hardware("BearSSL/src")
     local modifiers = Create_modifiers(src)
+    Resolve_redefinitions(modifiers)
     Create_summary(modifiers)
     if true then
         return

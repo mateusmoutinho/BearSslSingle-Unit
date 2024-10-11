@@ -9,13 +9,12 @@ function Create_summary(modifiers)
     json.dumps_to_file(all, "summary.json")
 end
 
-function Is_token_already_defined_by_other(modifier)
-
-end
-
 ---@param modifiers Modifier[]
 function Resolve_redefinitions(modifiers)
-
+    for i = 1, #modifiers do
+        local current = modifiers[i]
+        current.resolve_redefinitions(modifiers)
+    end
 end
 
 ---@param src DtwTree

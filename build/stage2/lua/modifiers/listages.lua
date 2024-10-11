@@ -9,6 +9,15 @@ function Create_summary(modifiers)
     json.dumps_to_file(all, "summary.json")
 end
 
+function Is_token_already_defined_by_other(modifier)
+
+end
+
+---@param modifiers Modifier[]
+function Resolve_redefinitions(modifiers)
+
+end
+
 ---@param src DtwTree
 ---@return Modifier[]
 function Create_modifiers(src)

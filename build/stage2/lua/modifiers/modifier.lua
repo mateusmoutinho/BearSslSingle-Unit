@@ -11,6 +11,40 @@ function NewModifier(part)
             tokens = self.tokens
         }
     end
+    self.is_defined = function(token)
+        for i = 1, #self.tokens do
+            local current = self.tokens[i]
+            if current.value == token then
+                return true
+            end
+        end
+        return false
+    end
+
+    ---@param all Modifier[]
+    ---@param token string
+    ---@return boolean
+    self.is_defined_by_others = function(all,token) do
+        for i=1,#all do
+            local current = all[i]
+            if current ~= self then
+                if current.is_defined(token) then
+                    return true
+                end
+            end
+        end
+        return false
+    end
+
+    ---@param all Modifier[]
+    self.resolve_redefinitions = function(all)
+        for i = 1, #self.tokens do
+            local current = self.tokens[i]
+            if self.is_defined_by_others(all,current.value) then
+                current.replace = "private_"..self.tree_part.path.get_only_name()..current.value
+            end
+        end
+    end
 
     return self
 end

@@ -101,7 +101,7 @@ le13_to_be8(unsigned char *dst, size_t len, const uint32_t *src)
  * arrays may be identical, but shall not overlap partially.
  */
 static inline uint32_t
-norm13(uint32_t *d, const uint32_t *w, size_t len)
+private_ec_p256_m15norm13(uint32_t *d, const uint32_t *w, size_t len)
 {
 	size_t u;
 	uint32_t cc;
@@ -118,11 +118,11 @@ norm13(uint32_t *d, const uint32_t *w, size_t len)
 }
 
 /*
- * mul20() multiplies two 260-bit integers together. Each word must fit
+ * private_ec_p256_m15mul20() multiplies two 260-bit integers together. Each word must fit
  * on 13 bits; source operands use 20 words, destination operand
  * receives 40 words. All overlaps allowed.
  *
- * square20() computes the square of a 260-bit integer. Each word must
+ * private_ec_p256_m15square20() computes the square of a 260-bit integer. Each word must
  * fit on 13 bits; source operand uses 20 words, destination operand
  * receives 40 words. All overlaps allowed.
  */
@@ -130,7 +130,7 @@ norm13(uint32_t *d, const uint32_t *w, size_t len)
 #if BR_SLOW_MUL15
 
 static void
-mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
+private_ec_p256_m15mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	/*
 	 * Two-level Karatsuba: turns a 20x20 multiplication into
@@ -345,7 +345,7 @@ mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	/*
 	 * Perform carry propagation to bring all words down to 13 bits.
 	 */
-	cc = norm13(d, w, 40);
+	cc = private_ec_p256_m15norm13(d, w, 40);
 	d[39] += (cc << 13);
 
 #undef ZADD
@@ -356,15 +356,15 @@ mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
 }
 
 static inline void
-square20(uint32_t *d, const uint32_t *a)
+private_ec_p256_m15square20(uint32_t *d, const uint32_t *a)
 {
-	mul20(d, a, a);
+	private_ec_p256_m15mul20(d, a, a);
 }
 
 #else
 
 static void
-mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
+private_ec_p256_m15mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	uint32_t t[39];
 
@@ -768,11 +768,11 @@ mul20(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	t[37] = MUL15(a[18], b[19])
 		+ MUL15(a[19], b[18]);
 	t[38] = MUL15(a[19], b[19]);
-	d[39] = norm13(d, t, 39);
+	d[39] = private_ec_p256_m15norm13(d, t, 39);
 }
 
 static void
-square20(uint32_t *d, const uint32_t *a)
+private_ec_p256_m15square20(uint32_t *d, const uint32_t *a)
 {
 	uint32_t t[39];
 
@@ -986,7 +986,7 @@ square20(uint32_t *d, const uint32_t *a)
 		+ ((MUL15(a[17], a[19])) << 1);
 	t[37] = ((MUL15(a[18], a[19])) << 1);
 	t[38] = MUL15(a[19], a[19]);
-	d[39] = norm13(d, t, 39);
+	d[39] = private_ec_p256_m15norm13(d, t, 39);
 }
 
 #endif
@@ -1025,7 +1025,7 @@ reduce_f256(uint32_t *d)
 	d[14] -= x << 10;
 	d[7] -= x << 5;
 	d[0] += x;
-	norm13(d, d, 20);
+	private_ec_p256_m15norm13(d, d, 20);
 }
 
 /*
@@ -1073,7 +1073,7 @@ mul_f256(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	 * Compute raw multiplication. All result words fit in 13 bits
 	 * each.
 	 */
-	mul20(t, a, b);
+	private_ec_p256_m15mul20(t, a, b);
 
 	/*
 	 * Modular reduction: each high word in added/subtracted where
@@ -1113,7 +1113,7 @@ mul_f256(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	 * starting values are 13-bit each, all words fit on 20 bits
 	 * (21 to account for the sign bit).
 	 */
-	cc = norm13(t, t, 20);
+	cc = private_ec_p256_m15norm13(t, t, 20);
 
 	/*
 	 * Perform modular reduction again for the bits beyond 256 (the carry
@@ -1143,7 +1143,7 @@ mul_f256(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	t[17] -= cc << 3;
 	t[19] += cc << 9;
 
-	norm13(d, t, 20);
+	private_ec_p256_m15norm13(d, t, 20);
 }
 
 /*
@@ -1162,7 +1162,7 @@ square_f256(uint32_t *d, const uint32_t *a)
 	/*
 	 * Compute raw square. All result words fit in 13 bits each.
 	 */
-	square20(t, a);
+	private_ec_p256_m15square20(t, a);
 
 	/*
 	 * Modular reduction: each high word in added/subtracted where
@@ -1202,7 +1202,7 @@ square_f256(uint32_t *d, const uint32_t *a)
 	 * starting values are 13-bit each, all words fit on 20 bits
 	 * (21 to account for the sign bit).
 	 */
-	cc = norm13(t, t, 20);
+	cc = private_ec_p256_m15norm13(t, t, 20);
 
 	/*
 	 * Perform modular reduction again for the bits beyond 256 (the carry
@@ -1232,7 +1232,7 @@ square_f256(uint32_t *d, const uint32_t *a)
 	t[17] -= cc << 3;
 	t[19] += cc << 9;
 
-	norm13(d, t, 20);
+	private_ec_p256_m15norm13(d, t, 20);
 }
 
 /*
@@ -1374,8 +1374,8 @@ p256_double(p256_jacobian *Q)
 		t2[i] = (F256[i] << 1) + Q->x[i] - t1[i];
 		t1[i] += Q->x[i];
 	}
-	norm13(t1, t1, 20);
-	norm13(t2, t2, 20);
+	private_ec_p256_m15norm13(t1, t1, 20);
+	private_ec_p256_m15norm13(t2, t2, 20);
 
 	/*
 	 * Compute 3*(x+z^2)*(x-z^2) in t1.
@@ -1384,7 +1384,7 @@ p256_double(p256_jacobian *Q)
 	for (i = 0; i < 20; i ++) {
 		t1[i] = MUL15(3, t3[i]);
 	}
-	norm13(t1, t1, 20);
+	private_ec_p256_m15norm13(t1, t1, 20);
 
 	/*
 	 * Compute 4*x*y^2 (in t2) and 2*y^2 (in t3).
@@ -1393,12 +1393,12 @@ p256_double(p256_jacobian *Q)
 	for (i = 0; i < 20; i ++) {
 		t3[i] <<= 1;
 	}
-	norm13(t3, t3, 20);
+	private_ec_p256_m15norm13(t3, t3, 20);
 	mul_f256(t2, Q->x, t3);
 	for (i = 0; i < 20; i ++) {
 		t2[i] <<= 1;
 	}
-	norm13(t2, t2, 20);
+	private_ec_p256_m15norm13(t2, t2, 20);
 	reduce_f256(t2);
 
 	/*
@@ -1408,7 +1408,7 @@ p256_double(p256_jacobian *Q)
 	for (i = 0; i < 20; i ++) {
 		Q->x[i] += (F256[i] << 2) - (t2[i] << 1);
 	}
-	norm13(Q->x, Q->x, 20);
+	private_ec_p256_m15norm13(Q->x, Q->x, 20);
 	reduce_f256(Q->x);
 
 	/*
@@ -1418,7 +1418,7 @@ p256_double(p256_jacobian *Q)
 	for (i = 0; i < 20; i ++) {
 		Q->z[i] = t4[i] << 1;
 	}
-	norm13(Q->z, Q->z, 20);
+	private_ec_p256_m15norm13(Q->z, Q->z, 20);
 	reduce_f256(Q->z);
 
 	/*
@@ -1428,13 +1428,13 @@ p256_double(p256_jacobian *Q)
 	for (i = 0; i < 20; i ++) {
 		t2[i] += (F256[i] << 1) - Q->x[i];
 	}
-	norm13(t2, t2, 20);
+	private_ec_p256_m15norm13(t2, t2, 20);
 	mul_f256(Q->y, t1, t2);
 	square_f256(t4, t3);
 	for (i = 0; i < 20; i ++) {
 		Q->y[i] += (F256[i] << 2) - (t4[i] << 1);
 	}
-	norm13(Q->y, Q->y, 20);
+	private_ec_p256_m15norm13(Q->y, Q->y, 20);
 	reduce_f256(Q->y);
 }
 
@@ -1514,8 +1514,8 @@ p256_add(p256_jacobian *P1, const p256_jacobian *P2)
 		t2[i] += (F256[i] << 1) - t1[i];
 		t4[i] += (F256[i] << 1) - t3[i];
 	}
-	norm13(t2, t2, 20);
-	norm13(t4, t4, 20);
+	private_ec_p256_m15norm13(t2, t2, 20);
+	private_ec_p256_m15norm13(t4, t4, 20);
 	reduce_f256(t4);
 	reduce_final_f256(t4);
 	ret = 0;
@@ -1538,7 +1538,7 @@ p256_add(p256_jacobian *P1, const p256_jacobian *P2)
 	for (i = 0; i < 20; i ++) {
 		P1->x[i] += (F256[i] << 3) - t5[i] - (t6[i] << 1);
 	}
-	norm13(P1->x, P1->x, 20);
+	private_ec_p256_m15norm13(P1->x, P1->x, 20);
 	reduce_f256(P1->x);
 
 	/*
@@ -1547,13 +1547,13 @@ p256_add(p256_jacobian *P1, const p256_jacobian *P2)
 	for (i = 0; i < 20; i ++) {
 		t6[i] += (F256[i] << 1) - P1->x[i];
 	}
-	norm13(t6, t6, 20);
+	private_ec_p256_m15norm13(t6, t6, 20);
 	mul_f256(P1->y, t4, t6);
 	mul_f256(t1, t5, t3);
 	for (i = 0; i < 20; i ++) {
 		P1->y[i] += (F256[i] << 1) - t1[i];
 	}
-	norm13(P1->y, P1->y, 20);
+	private_ec_p256_m15norm13(P1->y, P1->y, 20);
 	reduce_f256(P1->y);
 
 	/*
@@ -1637,8 +1637,8 @@ p256_add_mixed(p256_jacobian *P1, const p256_jacobian *P2)
 		t2[i] += (F256[i] << 1) - t1[i];
 		t4[i] += (F256[i] << 1) - t3[i];
 	}
-	norm13(t2, t2, 20);
-	norm13(t4, t4, 20);
+	private_ec_p256_m15norm13(t2, t2, 20);
+	private_ec_p256_m15norm13(t4, t4, 20);
 	reduce_f256(t4);
 	reduce_final_f256(t4);
 	ret = 0;
@@ -1661,7 +1661,7 @@ p256_add_mixed(p256_jacobian *P1, const p256_jacobian *P2)
 	for (i = 0; i < 20; i ++) {
 		P1->x[i] += (F256[i] << 3) - t5[i] - (t6[i] << 1);
 	}
-	norm13(P1->x, P1->x, 20);
+	private_ec_p256_m15norm13(P1->x, P1->x, 20);
 	reduce_f256(P1->x);
 
 	/*
@@ -1670,13 +1670,13 @@ p256_add_mixed(p256_jacobian *P1, const p256_jacobian *P2)
 	for (i = 0; i < 20; i ++) {
 		t6[i] += (F256[i] << 1) - P1->x[i];
 	}
-	norm13(t6, t6, 20);
+	private_ec_p256_m15norm13(t6, t6, 20);
 	mul_f256(P1->y, t4, t6);
 	mul_f256(t1, t5, t3);
 	for (i = 0; i < 20; i ++) {
 		P1->y[i] += (F256[i] << 1) - t1[i];
 	}
-	norm13(P1->y, P1->y, 20);
+	private_ec_p256_m15norm13(P1->y, P1->y, 20);
 	reduce_f256(P1->y);
 
 	/*
@@ -1730,7 +1730,7 @@ p256_decode(p256_jacobian *P, const void *src, size_t len)
 	for (i = 0; i < 20; i ++) {
 		t1[i] += (F256[i] << 3) - MUL15(3, tx[i]) + P256_B[i] - t2[i];
 	}
-	norm13(t1, t1, 20);
+	private_ec_p256_m15norm13(t1, t1, 20);
 	reduce_f256(t1);
 	reduce_final_f256(t1);
 	for (i = 0; i < 20; i ++) {

@@ -35,7 +35,7 @@
  *   - R^2 mod p (R = 2^(15k) for the smallest k such that R >= p)
  */
 
-static const uint16_t C255_P[] = {
+static const uint16_t private_ec_c25519_i15C255_P[] = {
 	0x0110,
 	0x7FED, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
 	0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF, 0x7FFF,
@@ -44,7 +44,7 @@ static const uint16_t C255_P[] = {
 
 #define P0I   0x4A1B
 
-static const uint16_t C255_R2[] = {
+static const uint16_t private_ec_c25519_i15C255_R2[] = {
 	0x0110,
 	0x0169, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -63,7 +63,7 @@ print_int_mont(const char *name, const uint16_t *x)
 
 	printf("%s = ", name);
 	memcpy(y, x, sizeof y);
-	br_i15_from_monty(y, C255_P, P0I);
+	br_i15_from_monty(y, private_ec_c25519_i15C255_P, P0I);
 	br_i15_encode(tmp, sizeof tmp, y);
 	for (u = 0; u < sizeof tmp; u ++) {
 		printf("%02X", tmp[u]);
@@ -72,21 +72,21 @@ print_int_mont(const char *name, const uint16_t *x)
 }
 */
 
-static const uint16_t C255_A24[] = {
+static const uint16_t private_ec_c25519_i15C255_A24[] = {
 	0x0110,
 	0x45D3, 0x0046, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 	0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 	0x0000
 };
 
-static const unsigned char GEN[] = {
+static const unsigned char private_ec_c25519_i15GEN[] = {
 	0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static const unsigned char ORDER[] = {
+static const unsigned char private_ec_c25519_i15ORDER[] = {
 	0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -94,23 +94,23 @@ static const unsigned char ORDER[] = {
 };
 
 static const unsigned char *
-api_generator(int curve, size_t *len)
+private_ec_c25519_i15api_generator(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return GEN;
+	return private_ec_c25519_i15GEN;
 }
 
 static const unsigned char *
-api_order(int curve, size_t *len)
+private_ec_c25519_i15api_order(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return ORDER;
+	return private_ec_c25519_i15ORDER;
 }
 
 static size_t
-api_xoff(int curve, size_t *len)
+private_ec_c25519_i15api_xoff(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
@@ -118,7 +118,7 @@ api_xoff(int curve, size_t *len)
 }
 
 static void
-cswap(uint16_t *a, uint16_t *b, uint32_t ctl)
+private_ec_c25519_i15cswap(uint16_t *a, uint16_t *b, uint32_t ctl)
 {
 	int i;
 
@@ -142,8 +142,8 @@ c255_add(uint16_t *d, const uint16_t *a, const uint16_t *b)
 
 	memcpy(t, a, sizeof t);
 	ctl = br_i15_add(t, b, 1);
-	ctl |= NOT(br_i15_sub(t, C255_P, 0));
-	br_i15_sub(t, C255_P, ctl);
+	ctl |= NOT(br_i15_sub(t, private_ec_c25519_i15C255_P, 0));
+	br_i15_sub(t, private_ec_c25519_i15C255_P, ctl);
 	memcpy(d, t, sizeof t);
 }
 
@@ -153,7 +153,7 @@ c255_sub(uint16_t *d, const uint16_t *a, const uint16_t *b)
 	uint16_t t[18];
 
 	memcpy(t, a, sizeof t);
-	br_i15_add(t, C255_P, br_i15_sub(t, b, 1));
+	br_i15_add(t, private_ec_c25519_i15C255_P, br_i15_sub(t, b, 1));
 	memcpy(d, t, sizeof t);
 }
 
@@ -162,12 +162,12 @@ c255_mul(uint16_t *d, const uint16_t *a, const uint16_t *b)
 {
 	uint16_t t[18];
 
-	br_i15_montymul(t, a, b, C255_P, P0I);
+	br_i15_montymul(t, a, b, private_ec_c25519_i15C255_P, P0I);
 	memcpy(d, t, sizeof t);
 }
 
 static void
-byteswap(unsigned char *G)
+private_ec_c25519_i15byteswap(unsigned char *G)
 {
 	int i;
 
@@ -181,7 +181,7 @@ byteswap(unsigned char *G)
 }
 
 static uint32_t
-api_mul(unsigned char *G, size_t Glen,
+private_ec_c25519_i15api_mul(unsigned char *G, size_t Glen,
 	const unsigned char *kb, size_t kblen, int curve)
 {
 #define ILEN   (18 * sizeof(uint16_t))
@@ -214,7 +214,7 @@ api_mul(unsigned char *G, size_t Glen,
 	 * Byteswap the point encoding, because it uses little-endian, and
 	 * the generic decoding routine uses big-endian.
 	 */
-	byteswap(G);
+	private_ec_c25519_i15byteswap(G);
 
 	/*
 	 * Decode the point ('u' coordinate). This should be reduced
@@ -225,21 +225,21 @@ api_mul(unsigned char *G, size_t Glen,
 	 * subtraction. We use br_i15_decode_mod() and not
 	 * br_i15_decode(), because the ec_prime_i15 implementation uses
 	 * the former but not the latter.
-	 *    br_i15_decode_reduce(a, G, 32, C255_P);
+	 *    br_i15_decode_reduce(a, G, 32, private_ec_c25519_i15C255_P);
 	 */
 	br_i15_zero(b, 0x111);
 	b[18] = 1;
 	br_i15_decode_mod(a, G, 32, b);
 	a[0] = 0x110;
-	br_i15_sub(a, C255_P, NOT(br_i15_sub(a, C255_P, 0)));
+	br_i15_sub(a, private_ec_c25519_i15C255_P, NOT(br_i15_sub(a, private_ec_c25519_i15C255_P, 0)));
 
 	/*
 	 * Initialise variables x1, x2, z2, x3 and z3. We set all of them
 	 * into Montgomery representation.
 	 */
-	br_i15_montymul(x1, a, C255_R2, C255_P, P0I);
+	br_i15_montymul(x1, a, private_ec_c25519_i15C255_R2, private_ec_c25519_i15C255_P, P0I);
 	memcpy(x3, x1, ILEN);
-	br_i15_zero(z2, C255_P[0]);
+	br_i15_zero(z2, private_ec_c25519_i15C255_P[0]);
 	memcpy(x2, z2, ILEN);
 	x2[1] = 19;
 	memcpy(z3, x2, ILEN);
@@ -260,8 +260,8 @@ api_mul(unsigned char *G, size_t Glen,
 
 		kt = (k[31 - (i >> 3)] >> (i & 7)) & 1;
 		swap ^= kt;
-		cswap(x2, x3, swap);
-		cswap(z2, z3, swap);
+		private_ec_c25519_i15cswap(x2, x3, swap);
+		private_ec_c25519_i15cswap(z2, z3, swap);
 		swap = kt;
 
 		/* obsolete
@@ -299,7 +299,7 @@ api_mul(unsigned char *G, size_t Glen,
 		c255_mul(z3, z3, z3);
 		c255_mul(z3, z3, x1);
 		c255_mul(x2, aa, bb);
-		c255_mul(z2, C255_A24, e);
+		c255_mul(z2, private_ec_c25519_i15C255_A24, e);
 		c255_add(z2, z2, aa);
 		c255_mul(z2, e, z2);
 
@@ -310,8 +310,8 @@ api_mul(unsigned char *G, size_t Glen,
 		print_int_mont("z3", z3);
 		*/
 	}
-	cswap(x2, x3, swap);
-	cswap(z2, z3, swap);
+	private_ec_c25519_i15cswap(x2, x3, swap);
+	private_ec_c25519_i15cswap(z2, z3, swap);
 
 	/*
 	 * Inverse z2 with a modular exponentiation. This is a simple
@@ -344,34 +344,34 @@ api_mul(unsigned char *G, size_t Glen,
 	 * To avoid a dependency on br_i15_from_monty(), we use a
 	 * Montgomery multiplication with 1.
 	 *    memcpy(x2, b, ILEN);
-	 *    br_i15_from_monty(x2, C255_P, P0I);
+	 *    br_i15_from_monty(x2, private_ec_c25519_i15C255_P, P0I);
 	 */
-	br_i15_zero(a, C255_P[0]);
+	br_i15_zero(a, private_ec_c25519_i15C255_P[0]);
 	a[1] = 1;
-	br_i15_montymul(x2, a, b, C255_P, P0I);
+	br_i15_montymul(x2, a, b, private_ec_c25519_i15C255_P, P0I);
 
 	br_i15_encode(G, 32, x2);
-	byteswap(G);
+	private_ec_c25519_i15byteswap(G);
 	return 1;
 
 #undef ILEN
 }
 
 static size_t
-api_mulgen(unsigned char *R,
+private_ec_c25519_i15private_ec_c25519_i15api_mulgen(unsigned char *R,
 	const unsigned char *x, size_t xlen, int curve)
 {
 	const unsigned char *G;
 	size_t Glen;
 
-	G = api_generator(curve, &Glen);
+	G = private_ec_c25519_i15api_generator(curve, &Glen);
 	memcpy(R, G, Glen);
-	api_mul(R, Glen, x, xlen, curve);
+	private_ec_c25519_i15api_mul(R, Glen, x, xlen, curve);
 	return Glen;
 }
 
 static uint32_t
-api_muladd(unsigned char *A, const unsigned char *B, size_t len,
+private_ec_c25519_i15private_ec_c25519_i15api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 	const unsigned char *x, size_t xlen,
 	const unsigned char *y, size_t ylen, int curve)
 {
@@ -394,10 +394,10 @@ api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 /* see bearssl_ec.h */
 const br_ec_impl br_ec_c25519_i15 = {
 	(uint32_t)0x20000000,
-	&api_generator,
-	&api_order,
-	&api_xoff,
-	&api_mul,
-	&api_mulgen,
-	&api_muladd
+	&private_ec_c25519_i15api_generator,
+	&private_ec_c25519_i15api_order,
+	&private_ec_c25519_i15api_xoff,
+	&private_ec_c25519_i15api_mul,
+	&private_ec_c25519_i15private_ec_c25519_i15api_mulgen,
+	&private_ec_c25519_i15private_ec_c25519_i15api_muladd
 };

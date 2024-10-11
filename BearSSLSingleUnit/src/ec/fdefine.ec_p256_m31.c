@@ -113,7 +113,7 @@ le30_to_be8(unsigned char *dst, size_t len, const uint32_t *src)
  * 18 words of 30 bits each.
  */
 static void
-mul9(uint32_t *d, const uint32_t *a, const uint32_t *b)
+private_ec_p256_m31mul9(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	/*
 	 * Maximum intermediate result is no more than
@@ -402,7 +402,7 @@ mul_f256(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	uint32_t z, c;
 	int i;
 
-	mul9(t, a, b);
+	private_ec_p256_m31mul9(t, a, b);
 
 	/*
 	 * Modular reduction: each high word in added/subtracted where

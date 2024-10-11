@@ -35,7 +35,7 @@
  *   - R^2 mod p (R = 2^(31k) for the smallest k such that R >= p)
  */
 
-static const uint32_t C255_P[] = {
+static const uint32_t private_ec_c25519_i31C255_P[] = {
 	0x00000107,
 	0x7FFFFFED, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF,
 	0x7FFFFFFF, 0x7FFFFFFF, 0x7FFFFFFF, 0x0000007F
@@ -43,13 +43,13 @@ static const uint32_t C255_P[] = {
 
 #define P0I   0x286BCA1B
 
-static const uint32_t C255_R2[] = {
+static const uint32_t private_ec_c25519_i31C255_R2[] = {
 	0x00000107,
 	0x00000000, 0x02D20000, 0x00000000, 0x00000000, 0x00000000,
 	0x00000000, 0x00000000, 0x00000000, 0x00000000
 };
 
-static const uint32_t C255_A24[] = {
+static const uint32_t private_ec_c25519_i31C255_A24[] = {
 	0x00000107,
 	0x53000000, 0x0000468B, 0x00000000, 0x00000000, 0x00000000,
 	0x00000000, 0x00000000, 0x00000000, 0x00000000
@@ -67,7 +67,7 @@ print_int_mont(const char *name, const uint32_t *x)
 
 	printf("%s = ", name);
 	memcpy(y, x, sizeof y);
-	br_i31_from_monty(y, C255_P, P0I);
+	br_i31_from_monty(y, private_ec_c25519_i31C255_P, P0I);
 	br_i31_encode(tmp, sizeof tmp, y);
 	for (u = 0; u < sizeof tmp; u ++) {
 		printf("%02X", tmp[u]);
@@ -76,14 +76,14 @@ print_int_mont(const char *name, const uint32_t *x)
 }
 */
 
-static const unsigned char GEN[] = {
+static const unsigned char private_ec_c25519_i31GEN[] = {
 	0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static const unsigned char ORDER[] = {
+static const unsigned char private_ec_c25519_i31ORDER[] = {
 	0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -91,23 +91,23 @@ static const unsigned char ORDER[] = {
 };
 
 static const unsigned char *
-api_generator(int curve, size_t *len)
+private_ec_c25519_i31api_generator(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return GEN;
+	return private_ec_c25519_i31GEN;
 }
 
 static const unsigned char *
-api_order(int curve, size_t *len)
+private_ec_c25519_i31api_order(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return ORDER;
+	return private_ec_c25519_i31ORDER;
 }
 
 static size_t
-api_xoff(int curve, size_t *len)
+private_ec_c25519_i31api_xoff(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
@@ -115,7 +115,7 @@ api_xoff(int curve, size_t *len)
 }
 
 static void
-cswap(uint32_t *a, uint32_t *b, uint32_t ctl)
+private_ec_c25519_i31cswap(uint32_t *a, uint32_t *b, uint32_t ctl)
 {
 	int i;
 
@@ -139,8 +139,8 @@ c255_add(uint32_t *d, const uint32_t *a, const uint32_t *b)
 
 	memcpy(t, a, sizeof t);
 	ctl = br_i31_add(t, b, 1);
-	ctl |= NOT(br_i31_sub(t, C255_P, 0));
-	br_i31_sub(t, C255_P, ctl);
+	ctl |= NOT(br_i31_sub(t, private_ec_c25519_i31C255_P, 0));
+	br_i31_sub(t, private_ec_c25519_i31C255_P, ctl);
 	memcpy(d, t, sizeof t);
 }
 
@@ -150,7 +150,7 @@ c255_sub(uint32_t *d, const uint32_t *a, const uint32_t *b)
 	uint32_t t[10];
 
 	memcpy(t, a, sizeof t);
-	br_i31_add(t, C255_P, br_i31_sub(t, b, 1));
+	br_i31_add(t, private_ec_c25519_i31C255_P, br_i31_sub(t, b, 1));
 	memcpy(d, t, sizeof t);
 }
 
@@ -159,12 +159,12 @@ c255_mul(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	uint32_t t[10];
 
-	br_i31_montymul(t, a, b, C255_P, P0I);
+	br_i31_montymul(t, a, b, private_ec_c25519_i31C255_P, P0I);
 	memcpy(d, t, sizeof t);
 }
 
 static void
-byteswap(unsigned char *G)
+private_ec_c25519_i31byteswap(unsigned char *G)
 {
 	int i;
 
@@ -178,7 +178,7 @@ byteswap(unsigned char *G)
 }
 
 static uint32_t
-api_mul(unsigned char *G, size_t Glen,
+private_ec_c25519_i31api_mul(unsigned char *G, size_t Glen,
 	const unsigned char *kb, size_t kblen, int curve)
 {
 	uint32_t x1[10], x2[10], x3[10], z2[10], z3[10];
@@ -205,7 +205,7 @@ api_mul(unsigned char *G, size_t Glen,
 	 * Byteswap the point encoding, because it uses little-endian, and
 	 * the generic decoding routine uses big-endian.
 	 */
-	byteswap(G);
+	private_ec_c25519_i31byteswap(G);
 
 	/*
 	 * Decode the point ('u' coordinate). This should be reduced
@@ -216,21 +216,21 @@ api_mul(unsigned char *G, size_t Glen,
 	 * subtraction. We use br_i31_decode_mod() and not
 	 * br_i31_decode(), because the ec_prime_i31 implementation uses
 	 * the former but not the latter.
-	 *    br_i31_decode_reduce(a, G, 32, C255_P);
+	 *    br_i31_decode_reduce(a, G, 32, private_ec_c25519_i31C255_P);
 	 */
 	br_i31_zero(b, 0x108);
 	b[9] = 0x0080;
 	br_i31_decode_mod(a, G, 32, b);
 	a[0] = 0x107;
-	br_i31_sub(a, C255_P, NOT(br_i31_sub(a, C255_P, 0)));
+	br_i31_sub(a, private_ec_c25519_i31C255_P, NOT(br_i31_sub(a, private_ec_c25519_i31C255_P, 0)));
 
 	/*
 	 * Initialise variables x1, x2, z2, x3 and z3. We set all of them
 	 * into Montgomery representation.
 	 */
-	br_i31_montymul(x1, a, C255_R2, C255_P, P0I);
+	br_i31_montymul(x1, a, private_ec_c25519_i31C255_R2, private_ec_c25519_i31C255_P, P0I);
 	memcpy(x3, x1, sizeof x1);
-	br_i31_zero(z2, C255_P[0]);
+	br_i31_zero(z2, private_ec_c25519_i31C255_P[0]);
 	memcpy(x2, z2, sizeof z2);
 	x2[1] = 0x13000000;
 	memcpy(z3, x2, sizeof x2);
@@ -254,8 +254,8 @@ api_mul(unsigned char *G, size_t Glen,
 
 		kt = (k[31 - (i >> 3)] >> (i & 7)) & 1;
 		swap ^= kt;
-		cswap(x2, x3, swap);
-		cswap(z2, z3, swap);
+		private_ec_c25519_i31cswap(x2, x3, swap);
+		private_ec_c25519_i31cswap(z2, z3, swap);
 		swap = kt;
 
 		/* obsolete
@@ -293,7 +293,7 @@ api_mul(unsigned char *G, size_t Glen,
 		c255_mul(z3, z3, z3);
 		c255_mul(z3, z3, x1);
 		c255_mul(x2, aa, bb);
-		c255_mul(z2, C255_A24, e);
+		c255_mul(z2, private_ec_c25519_i31C255_A24, e);
 		c255_add(z2, z2, aa);
 		c255_mul(z2, e, z2);
 
@@ -304,8 +304,8 @@ api_mul(unsigned char *G, size_t Glen,
 		print_int_mont("z3", z3);
 		*/
 	}
-	cswap(x2, x3, swap);
-	cswap(z2, z3, swap);
+	private_ec_c25519_i31cswap(x2, x3, swap);
+	private_ec_c25519_i31cswap(z2, z3, swap);
 
 	/*
 	 * Inverse z2 with a modular exponentiation. This is a simple
@@ -338,32 +338,32 @@ api_mul(unsigned char *G, size_t Glen,
 	 * To avoid a dependency on br_i31_from_monty(), we use
 	 * a Montgomery multiplication with 1.
 	 *    memcpy(x2, b, sizeof b);
-	 *    br_i31_from_monty(x2, C255_P, P0I);
+	 *    br_i31_from_monty(x2, private_ec_c25519_i31C255_P, P0I);
 	 */
-	br_i31_zero(a, C255_P[0]);
+	br_i31_zero(a, private_ec_c25519_i31C255_P[0]);
 	a[1] = 1;
-	br_i31_montymul(x2, a, b, C255_P, P0I);
+	br_i31_montymul(x2, a, b, private_ec_c25519_i31C255_P, P0I);
 
 	br_i31_encode(G, 32, x2);
-	byteswap(G);
+	private_ec_c25519_i31byteswap(G);
 	return 1;
 }
 
 static size_t
-api_mulgen(unsigned char *R,
+private_ec_c25519_i31private_ec_c25519_i31api_mulgen(unsigned char *R,
 	const unsigned char *x, size_t xlen, int curve)
 {
 	const unsigned char *G;
 	size_t Glen;
 
-	G = api_generator(curve, &Glen);
+	G = private_ec_c25519_i31api_generator(curve, &Glen);
 	memcpy(R, G, Glen);
-	api_mul(R, Glen, x, xlen, curve);
+	private_ec_c25519_i31api_mul(R, Glen, x, xlen, curve);
 	return Glen;
 }
 
 static uint32_t
-api_muladd(unsigned char *A, const unsigned char *B, size_t len,
+private_ec_c25519_i31private_ec_c25519_i31api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 	const unsigned char *x, size_t xlen,
 	const unsigned char *y, size_t ylen, int curve)
 {
@@ -386,10 +386,10 @@ api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 /* see bearssl_ec.h */
 const br_ec_impl br_ec_c25519_i31 = {
 	(uint32_t)0x20000000,
-	&api_generator,
-	&api_order,
-	&api_xoff,
-	&api_mul,
-	&api_mulgen,
-	&api_muladd
+	&private_ec_c25519_i31api_generator,
+	&private_ec_c25519_i31api_order,
+	&private_ec_c25519_i31api_xoff,
+	&private_ec_c25519_i31api_mul,
+	&private_ec_c25519_i31private_ec_c25519_i31api_mulgen,
+	&private_ec_c25519_i31private_ec_c25519_i31api_muladd
 };

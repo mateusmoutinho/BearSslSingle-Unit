@@ -1,5 +1,5 @@
 {
-        "replacers":{},
-        "name":"ec_p256_m31",
-        "private":[]
-    }
+    "replacers": {},
+    "name": "ec_p256_m31",
+    "private": ["mul9"]
+}

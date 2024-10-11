@@ -35,14 +35,14 @@
 #include <intrin.h>
 #endif
 
-static const unsigned char GEN[] = {
+static const unsigned char private_ec_c25519_m64GEN[] = {
 	0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static const unsigned char ORDER[] = {
+static const unsigned char private_ec_c25519_m64ORDER[] = {
 	0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -50,23 +50,23 @@ static const unsigned char ORDER[] = {
 };
 
 static const unsigned char *
-api_generator(int curve, size_t *len)
+private_ec_c25519_m64api_generator(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return GEN;
+	return private_ec_c25519_m64GEN;
 }
 
 static const unsigned char *
-api_order(int curve, size_t *len)
+private_ec_c25519_m64api_order(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return ORDER;
+	return private_ec_c25519_m64ORDER;
 }
 
 static size_t
-api_xoff(int curve, size_t *len)
+private_ec_c25519_m64api_xoff(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
@@ -85,7 +85,7 @@ api_xoff(int curve, size_t *len)
  * Swap two field elements, conditionally on a flag.
  */
 static inline void
-f255_cswap(uint64_t *a, uint64_t *b, uint32_t ctl)
+private_ec_c25519_m64f255_private_ec_c25519_m64cswap(uint64_t *a, uint64_t *b, uint32_t ctl)
 {
 	uint64_t m, w;
 
@@ -100,7 +100,7 @@ f255_cswap(uint64_t *a, uint64_t *b, uint32_t ctl)
  * Addition in the field.
  */
 static inline void
-f255_add(uint64_t *d, const uint64_t *a, const uint64_t *b)
+private_ec_c25519_m64f255_add(uint64_t *d, const uint64_t *a, const uint64_t *b)
 {
 #if BR_INT128
 
@@ -165,7 +165,7 @@ f255_add(uint64_t *d, const uint64_t *a, const uint64_t *b)
  * Subtraction.
  */
 static inline void
-f255_sub(uint64_t *d, const uint64_t *a, const uint64_t *b)
+private_ec_c25519_m64f255_sub(uint64_t *d, const uint64_t *a, const uint64_t *b)
 {
 #if BR_INT128
 
@@ -255,7 +255,7 @@ f255_sub(uint64_t *d, const uint64_t *a, const uint64_t *b)
  * Multiplication.
  */
 static inline void
-f255_mul(uint64_t *d, uint64_t *a, uint64_t *b)
+private_ec_c25519_m64f255_mul(uint64_t *d, uint64_t *a, uint64_t *b)
 {
 #if BR_INT128
 
@@ -500,7 +500,7 @@ f255_mul(uint64_t *d, uint64_t *a, uint64_t *b)
  * Multiplication by A24 = 121665.
  */
 static inline void
-f255_mul_a24(uint64_t *d, const uint64_t *a)
+private_ec_c25519_m64f255_mul_a24(uint64_t *d, const uint64_t *a)
 {
 #if BR_INT128
 
@@ -567,7 +567,7 @@ f255_mul_a24(uint64_t *d, const uint64_t *a)
  * Finalize reduction.
  */
 static inline void
-f255_final_reduce(uint64_t *a)
+private_ec_c25519_m64f255_final_reduce(uint64_t *a)
 {
 #if BR_INT128
 
@@ -622,7 +622,7 @@ f255_final_reduce(uint64_t *a)
 }
 
 static uint32_t
-api_mul(unsigned char *G, size_t Glen,
+private_ec_c25519_m64api_mul(unsigned char *G, size_t Glen,
 	const unsigned char *kb, size_t kblen, int curve)
 {
 	unsigned char k[32];
@@ -679,57 +679,57 @@ api_mul(unsigned char *G, size_t Glen,
 
 		kt = (k[31 - (i >> 3)] >> (i & 7)) & 1;
 		swap ^= kt;
-		f255_cswap(x2, x3, swap);
-		f255_cswap(z2, z3, swap);
+		private_ec_c25519_m64f255_private_ec_c25519_m64cswap(x2, x3, swap);
+		private_ec_c25519_m64f255_private_ec_c25519_m64cswap(z2, z3, swap);
 		swap = kt;
 
 		/* A = x_2 + z_2 */
-		f255_add(a, x2, z2);
+		private_ec_c25519_m64f255_add(a, x2, z2);
 
 		/* AA = A^2 */
-		f255_mul(aa, a, a);
+		private_ec_c25519_m64f255_mul(aa, a, a);
 
 		/* B = x_2 - z_2 */
-		f255_sub(b, x2, z2);
+		private_ec_c25519_m64f255_sub(b, x2, z2);
 
 		/* BB = B^2 */
-		f255_mul(bb, b, b);
+		private_ec_c25519_m64f255_mul(bb, b, b);
 
 		/* E = AA - BB */
-		f255_sub(e, aa, bb);
+		private_ec_c25519_m64f255_sub(e, aa, bb);
 
 		/* C = x_3 + z_3 */
-		f255_add(c, x3, z3);
+		private_ec_c25519_m64f255_add(c, x3, z3);
 
 		/* D = x_3 - z_3 */
-		f255_sub(d, x3, z3);
+		private_ec_c25519_m64f255_sub(d, x3, z3);
 
 		/* DA = D * A */
-		f255_mul(da, d, a);
+		private_ec_c25519_m64f255_mul(da, d, a);
 
 		/* CB = C * B */
-		f255_mul(cb, c, b);
+		private_ec_c25519_m64f255_mul(cb, c, b);
 
 		/* x_3 = (DA + CB)^2 */
-		f255_add(x3, da, cb);
-		f255_mul(x3, x3, x3);
+		private_ec_c25519_m64f255_add(x3, da, cb);
+		private_ec_c25519_m64f255_mul(x3, x3, x3);
 
 		/* z_3 = x_1 * (DA - CB)^2 */
-		f255_sub(z3, da, cb);
-		f255_mul(z3, z3, z3);
-		f255_mul(z3, x1, z3);
+		private_ec_c25519_m64f255_sub(z3, da, cb);
+		private_ec_c25519_m64f255_mul(z3, z3, z3);
+		private_ec_c25519_m64f255_mul(z3, x1, z3);
 
 		/* x_2 = AA * BB */
-		f255_mul(x2, aa, bb);
+		private_ec_c25519_m64f255_mul(x2, aa, bb);
 
 		/* z_2 = E * (AA + a24 * E) */
-		f255_mul_a24(z2, e);
-		f255_add(z2, aa, z2);
-		f255_mul(z2, e, z2);
+		private_ec_c25519_m64f255_mul_a24(z2, e);
+		private_ec_c25519_m64f255_add(z2, aa, z2);
+		private_ec_c25519_m64f255_mul(z2, e, z2);
 	}
 
-	f255_cswap(x2, x3, swap);
-	f255_cswap(z2, z3, swap);
+	private_ec_c25519_m64f255_private_ec_c25519_m64cswap(x2, x3, swap);
+	private_ec_c25519_m64f255_private_ec_c25519_m64cswap(z2, z3, swap);
 
 	/*
 	 * Compute 1/z2 = z2^(p-2). Since p = 2^255-19, we can mutualize
@@ -737,30 +737,30 @@ api_mul(unsigned char *G, size_t Glen,
 	 */
 	memcpy(x1, z2, sizeof z2);
 	for (i = 0; i < 15; i ++) {
-		f255_mul(x1, x1, x1);
-		f255_mul(x1, x1, z2);
+		private_ec_c25519_m64f255_mul(x1, x1, x1);
+		private_ec_c25519_m64f255_mul(x1, x1, z2);
 	}
 	memcpy(x3, x1, sizeof x1);
 	for (i = 0; i < 14; i ++) {
 		int j;
 
 		for (j = 0; j < 16; j ++) {
-			f255_mul(x3, x3, x3);
+			private_ec_c25519_m64f255_mul(x3, x3, x3);
 		}
-		f255_mul(x3, x3, x1);
+		private_ec_c25519_m64f255_mul(x3, x3, x1);
 	}
 	for (i = 14; i >= 0; i --) {
-		f255_mul(x3, x3, x3);
+		private_ec_c25519_m64f255_mul(x3, x3, x3);
 		if ((0xFFEB >> i) & 1) {
-			f255_mul(x3, z2, x3);
+			private_ec_c25519_m64f255_mul(x3, z2, x3);
 		}
 	}
 
 	/*
 	 * Compute x2/z2. We have 1/z2 in x3.
 	 */
-	f255_mul(x2, x2, x3);
-	f255_final_reduce(x2);
+	private_ec_c25519_m64f255_mul(x2, x2, x3);
+	private_ec_c25519_m64f255_final_reduce(x2);
 
 	/*
 	 * Encode the final x2 value in little-endian.
@@ -773,20 +773,20 @@ api_mul(unsigned char *G, size_t Glen,
 }
 
 static size_t
-api_mulgen(unsigned char *R,
+private_ec_c25519_m64private_ec_c25519_m64api_mulgen(unsigned char *R,
 	const unsigned char *x, size_t xlen, int curve)
 {
 	const unsigned char *G;
 	size_t Glen;
 
-	G = api_generator(curve, &Glen);
+	G = private_ec_c25519_m64api_generator(curve, &Glen);
 	memcpy(R, G, Glen);
-	api_mul(R, Glen, x, xlen, curve);
+	private_ec_c25519_m64api_mul(R, Glen, x, xlen, curve);
 	return Glen;
 }
 
 static uint32_t
-api_muladd(unsigned char *A, const unsigned char *B, size_t len,
+private_ec_c25519_m64private_ec_c25519_m64api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 	const unsigned char *x, size_t xlen,
 	const unsigned char *y, size_t ylen, int curve)
 {
@@ -809,12 +809,12 @@ api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 /* see bearssl_ec.h */
 const br_ec_impl br_ec_c25519_m64 = {
 	(uint32_t)0x20000000,
-	&api_generator,
-	&api_order,
-	&api_xoff,
-	&api_mul,
-	&api_mulgen,
-	&api_muladd
+	&private_ec_c25519_m64api_generator,
+	&private_ec_c25519_m64api_order,
+	&private_ec_c25519_m64api_xoff,
+	&private_ec_c25519_m64api_mul,
+	&private_ec_c25519_m64private_ec_c25519_m64api_mulgen,
+	&private_ec_c25519_m64private_ec_c25519_m64api_muladd
 };
 
 /* see bearssl_ec.h */

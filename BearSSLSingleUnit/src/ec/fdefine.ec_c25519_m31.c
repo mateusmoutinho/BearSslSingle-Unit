@@ -347,7 +347,7 @@ square9(uint32_t *d, const uint32_t *a)
  * returns 0.
  */
 static uint32_t
-reduce_final_f255(uint32_t *d)
+reduce_final_private_ec_c25519_m31f255(uint32_t *d)
 {
 	uint32_t t[9];
 	uint32_t cc;
@@ -375,7 +375,7 @@ reduce_final_f255(uint32_t *d)
  * fits on 256 bits and is lower than twice the modulus.
  */
 static void
-f255_mul(uint32_t *d, const uint32_t *a, const uint32_t *b)
+private_ec_c25519_m31f255_mul(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	uint32_t t[18], cc;
 	int i;
@@ -438,7 +438,7 @@ f255_mul(uint32_t *d, const uint32_t *a, const uint32_t *b)
  * fits on 256 bits and is lower than twice the modulus.
  */
 static void
-f255_square(uint32_t *d, const uint32_t *a)
+private_ec_c25519_m31f255_square(uint32_t *d, const uint32_t *a)
 {
 	uint32_t t[18], cc;
 	int i;
@@ -452,7 +452,7 @@ f255_square(uint32_t *d, const uint32_t *a)
 
 	/*
 	 * Modular reduction: each high word is added where necessary.
-	 * See f255_mul() for details on the reduction and carry limits.
+	 * See private_ec_c25519_m31f255_mul() for details on the reduction and carry limits.
 	 */
 	cc = MUL15(t[8] >> 15, 19);
 	t[8] &= 0x7FFF;
@@ -479,7 +479,7 @@ f255_square(uint32_t *d, const uint32_t *a)
  * than twice the modulus).
  */
 static void
-f255_add(uint32_t *d, const uint32_t *a, const uint32_t *b)
+private_ec_c25519_m31f255_add(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	/*
 	 * Since operand words fit on 30 bits, we can use 32-bit
@@ -508,7 +508,7 @@ f255_add(uint32_t *d, const uint32_t *a, const uint32_t *b)
  * performed (down to less than twice the modulus).
  */
 static void
-f255_sub(uint32_t *d, const uint32_t *a, const uint32_t *b)
+private_ec_c25519_m31f255_sub(uint32_t *d, const uint32_t *a, const uint32_t *b)
 {
 	/*
 	 * We actually compute a - b + 2*p, so that the final value is
@@ -537,7 +537,7 @@ f255_sub(uint32_t *d, const uint32_t *a, const uint32_t *b)
  * is performed (down to less than twice the modulus).
  */
 static void
-f255_mul_a24(uint32_t *d, const uint32_t *a)
+private_ec_c25519_m31f255_mul_a24(uint32_t *d, const uint32_t *a)
 {
 	int i;
 	uint64_t w;
@@ -568,14 +568,14 @@ f255_mul_a24(uint32_t *d, const uint32_t *a)
 	}
 }
 
-static const unsigned char GEN[] = {
+static const unsigned char private_ec_c25519_m31GEN[] = {
 	0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static const unsigned char ORDER[] = {
+static const unsigned char private_ec_c25519_m31ORDER[] = {
 	0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
 	0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -583,23 +583,23 @@ static const unsigned char ORDER[] = {
 };
 
 static const unsigned char *
-api_generator(int curve, size_t *len)
+private_ec_c25519_m31api_generator(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return GEN;
+	return private_ec_c25519_m31GEN;
 }
 
 static const unsigned char *
-api_order(int curve, size_t *len)
+private_ec_c25519_m31api_order(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
-	return ORDER;
+	return private_ec_c25519_m31ORDER;
 }
 
 static size_t
-api_xoff(int curve, size_t *len)
+private_ec_c25519_m31api_xoff(int curve, size_t *len)
 {
 	(void)curve;
 	*len = 32;
@@ -607,7 +607,7 @@ api_xoff(int curve, size_t *len)
 }
 
 static void
-cswap(uint32_t *a, uint32_t *b, uint32_t ctl)
+private_ec_c25519_m31cswap(uint32_t *a, uint32_t *b, uint32_t ctl)
 {
 	int i;
 
@@ -624,7 +624,7 @@ cswap(uint32_t *a, uint32_t *b, uint32_t ctl)
 }
 
 static uint32_t
-api_mul(unsigned char *G, size_t Glen,
+private_ec_c25519_m31api_mul(unsigned char *G, size_t Glen,
 	const unsigned char *kb, size_t kblen, int curve)
 {
 	uint32_t x1[9], x2[9], x3[9], z2[9], z3[9];
@@ -675,8 +675,8 @@ api_mul(unsigned char *G, size_t Glen,
 
 		kt = (k[31 - (i >> 3)] >> (i & 7)) & 1;
 		swap ^= kt;
-		cswap(x2, x3, swap);
-		cswap(z2, z3, swap);
+		private_ec_c25519_m31cswap(x2, x3, swap);
+		private_ec_c25519_m31cswap(z2, z3, swap);
 		swap = kt;
 
 		/* obsolete
@@ -686,15 +686,15 @@ api_mul(unsigned char *G, size_t Glen,
 		print_int("z3", z3);
 		*/
 
-		f255_add(a, x2, z2);
-		f255_square(aa, a);
-		f255_sub(b, x2, z2);
-		f255_square(bb, b);
-		f255_sub(e, aa, bb);
-		f255_add(c, x3, z3);
-		f255_sub(d, x3, z3);
-		f255_mul(da, d, a);
-		f255_mul(cb, c, b);
+		private_ec_c25519_m31f255_add(a, x2, z2);
+		private_ec_c25519_m31f255_square(aa, a);
+		private_ec_c25519_m31f255_sub(b, x2, z2);
+		private_ec_c25519_m31f255_square(bb, b);
+		private_ec_c25519_m31f255_sub(e, aa, bb);
+		private_ec_c25519_m31f255_add(c, x3, z3);
+		private_ec_c25519_m31f255_sub(d, x3, z3);
+		private_ec_c25519_m31f255_mul(da, d, a);
+		private_ec_c25519_m31f255_mul(cb, c, b);
 
 		/* obsolete
 		print_int("a ", a);
@@ -708,15 +708,15 @@ api_mul(unsigned char *G, size_t Glen,
 		print_int("cb", cb);
 		*/
 
-		f255_add(x3, da, cb);
-		f255_square(x3, x3);
-		f255_sub(z3, da, cb);
-		f255_square(z3, z3);
-		f255_mul(z3, z3, x1);
-		f255_mul(x2, aa, bb);
-		f255_mul_a24(z2, e);
-		f255_add(z2, z2, aa);
-		f255_mul(z2, e, z2);
+		private_ec_c25519_m31f255_add(x3, da, cb);
+		private_ec_c25519_m31f255_square(x3, x3);
+		private_ec_c25519_m31f255_sub(z3, da, cb);
+		private_ec_c25519_m31f255_square(z3, z3);
+		private_ec_c25519_m31f255_mul(z3, z3, x1);
+		private_ec_c25519_m31f255_mul(x2, aa, bb);
+		private_ec_c25519_m31f255_mul_a24(z2, e);
+		private_ec_c25519_m31f255_add(z2, z2, aa);
+		private_ec_c25519_m31f255_mul(z2, e, z2);
 
 		/* obsolete
 		print_int("x2", x2);
@@ -725,8 +725,8 @@ api_mul(unsigned char *G, size_t Glen,
 		print_int("z3", z3);
 		*/
 	}
-	cswap(x2, x3, swap);
-	cswap(z2, z3, swap);
+	private_ec_c25519_m31cswap(x2, x3, swap);
+	private_ec_c25519_m31cswap(z2, z3, swap);
 
 	/*
 	 * Inverse z2 with a modular exponentiation. This is a simple
@@ -735,45 +735,45 @@ api_mul(unsigned char *G, size_t Glen,
 	 */
 	memcpy(a, z2, sizeof z2);
 	for (i = 0; i < 15; i ++) {
-		f255_square(a, a);
-		f255_mul(a, a, z2);
+		private_ec_c25519_m31f255_square(a, a);
+		private_ec_c25519_m31f255_mul(a, a, z2);
 	}
 	memcpy(b, a, sizeof a);
 	for (i = 0; i < 14; i ++) {
 		int j;
 
 		for (j = 0; j < 16; j ++) {
-			f255_square(b, b);
+			private_ec_c25519_m31f255_square(b, b);
 		}
-		f255_mul(b, b, a);
+		private_ec_c25519_m31f255_mul(b, b, a);
 	}
 	for (i = 14; i >= 0; i --) {
-		f255_square(b, b);
+		private_ec_c25519_m31f255_square(b, b);
 		if ((0xFFEB >> i) & 1) {
-			f255_mul(b, z2, b);
+			private_ec_c25519_m31f255_mul(b, z2, b);
 		}
 	}
-	f255_mul(x2, x2, b);
-	reduce_final_f255(x2);
+	private_ec_c25519_m31f255_mul(x2, x2, b);
+	reduce_final_private_ec_c25519_m31f255(x2);
 	le30_to_le8(G, 32, x2);
 	return 1;
 }
 
 static size_t
-api_mulgen(unsigned char *R,
+private_ec_c25519_m31private_ec_c25519_m31api_mulgen(unsigned char *R,
 	const unsigned char *x, size_t xlen, int curve)
 {
 	const unsigned char *G;
 	size_t Glen;
 
-	G = api_generator(curve, &Glen);
+	G = private_ec_c25519_m31api_generator(curve, &Glen);
 	memcpy(R, G, Glen);
-	api_mul(R, Glen, x, xlen, curve);
+	private_ec_c25519_m31api_mul(R, Glen, x, xlen, curve);
 	return Glen;
 }
 
 static uint32_t
-api_muladd(unsigned char *A, const unsigned char *B, size_t len,
+private_ec_c25519_m31private_ec_c25519_m31api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 	const unsigned char *x, size_t xlen,
 	const unsigned char *y, size_t ylen, int curve)
 {
@@ -796,10 +796,10 @@ api_muladd(unsigned char *A, const unsigned char *B, size_t len,
 /* see bearssl_ec.h */
 const br_ec_impl br_ec_c25519_m31 = {
 	(uint32_t)0x20000000,
-	&api_generator,
-	&api_order,
-	&api_xoff,
-	&api_mul,
-	&api_mulgen,
-	&api_muladd
+	&private_ec_c25519_m31api_generator,
+	&private_ec_c25519_m31api_order,
+	&private_ec_c25519_m31api_xoff,
+	&private_ec_c25519_m31api_mul,
+	&private_ec_c25519_m31private_ec_c25519_m31api_mulgen,
+	&private_ec_c25519_m31private_ec_c25519_m31api_muladd
 };

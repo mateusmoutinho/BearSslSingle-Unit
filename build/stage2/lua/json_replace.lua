@@ -18,21 +18,24 @@ function Generate_mdifier_model_path(path)
 end
 
 ---@param path string
-function Create_json_modifier_model_if_not_exist(path)
+---@param name_without_extension
+function Create_json_modifier_model_if_not_exist(path, name_without_extension)
     if dtw.isfile(path) then
         return
     end
-
-
-    dtw.write_file(path, DEFAULT_JSON_MODIFIER_MODEL)
+    local formmated = clib.replace(DEFAULT_JSON_MODIFIER_MODEL, "#name#", name_without_extension)
+    dtw.write_file(path, formmated)
 end
 
+---@param json_modifier_path string
+---@param content string
 function Aply_json_modifier(json_modifier_path, content)
     local json_modifier = json.load_from_file(json_modifier_path)
-    local private_name = "private_" .. dtw.newPath(json_modifier_path).get_only_name()
-    for i = 1, json_modifier['private'] do
-        new_name = private_name .. json_modifier[i]
-        print(new_name)
+
+    local private_name = "private_" .. json_modifier["name"]
+
+    for i = 1, #json_modifier['private'] do
+        content = clib.replace()
     end
     return content
 end

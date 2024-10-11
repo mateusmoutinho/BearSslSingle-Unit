@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"ec_c25519_i31",
+        "private":[]
     }

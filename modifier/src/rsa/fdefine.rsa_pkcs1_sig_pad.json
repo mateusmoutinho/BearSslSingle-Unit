@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"rsa_pkcs1_sig_pad",
+        "private":[]
     }

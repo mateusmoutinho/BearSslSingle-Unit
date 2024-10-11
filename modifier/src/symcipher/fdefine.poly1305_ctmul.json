@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"poly1305_ctmul",
+        "private":[]
     }

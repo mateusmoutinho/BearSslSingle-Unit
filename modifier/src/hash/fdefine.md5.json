@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"md5",
+        "private":[]
     }

@@ -1,6 +1,7 @@
 DEFAULT_JSON_MODIFIER_MODEL = [[{
         "replacers":{},
-        "private":{}
+        "name":"#name#",
+        "private":[]
     }
 ]]
 

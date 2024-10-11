@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"prf_sha256",
+        "private":[]
     }

@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"aes_pwr8_cbcenc",
+        "private":[]
     }

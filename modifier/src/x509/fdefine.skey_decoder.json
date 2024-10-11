@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"skey_decoder",
+        "private":[]
     }

@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"ssl_engine_default_ecdsa",
+        "private":[]
     }

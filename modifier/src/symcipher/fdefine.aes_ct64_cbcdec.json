@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"aes_ct64_cbcdec",
+        "private":[]
     }

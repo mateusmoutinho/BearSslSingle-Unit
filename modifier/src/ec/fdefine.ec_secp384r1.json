@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"ec_secp384r1",
+        "private":[]
     }

@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"ecdsa_i15_bits",
+        "private":[]
     }

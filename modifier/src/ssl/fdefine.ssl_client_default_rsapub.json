@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"ssl_client_default_rsapub",
+        "private":[]
     }

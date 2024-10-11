@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"aes_x86ni_ctr",
+        "private":[]
     }

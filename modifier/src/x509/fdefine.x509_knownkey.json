@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"x509_knownkey",
+        "private":[]
     }

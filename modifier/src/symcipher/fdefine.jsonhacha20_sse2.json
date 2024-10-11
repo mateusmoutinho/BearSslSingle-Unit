@@ -1,4 +1,5 @@
 {
         "replacers":{},
-        "private":{}
+        "name":"chacha20_sse2",
+        "private":[]
     }

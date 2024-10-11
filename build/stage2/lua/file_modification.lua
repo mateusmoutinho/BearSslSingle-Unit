@@ -26,7 +26,8 @@ function Aply_file_modification(json_main_replacer, file)
         )
         local content = file.get_value()
         local formmated = Aply_json_replace(main_replace_json, content)
-        formmated = Aply_json_modifier(json_modifier_path, formmated)
+        -- formmated = Aply_json_modifier(json_modifier_path, formmated)
+
         file.set_value(formmated)
     end
 end

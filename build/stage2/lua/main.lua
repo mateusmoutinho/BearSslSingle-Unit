@@ -11,6 +11,8 @@ local function main()
     if true then
         return
     end
+
+
     --collect_tags()
     dtw.copy_any_overwriting("BearSSL/inc", SINGLE_UNIT_FOLDER .. "/inc")
     dtw.copy_any_overwriting("BearSSL/src", SINGLE_UNIT_FOLDER .. "/src")

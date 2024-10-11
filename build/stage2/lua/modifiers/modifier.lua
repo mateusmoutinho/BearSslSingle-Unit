@@ -47,6 +47,10 @@ function NewModifier(part)
             end
         end
     end
+    ---@param all Modifier[]
+    self.generate_file_modifications = function(all)
+        self.resolve_redefinitions(all)
+    end
 
     return self
 end

@@ -10,10 +10,10 @@ function Create_summary(modifiers)
 end
 
 ---@param modifiers Modifier[]
-function Resolve_redefinitions(modifiers)
+function Generate_modifications(modifiers)
     for i = 1, #modifiers do
         local current = modifiers[i]
-        current.resolve_redefinitions(modifiers)
+        current.generate_file_modifications(modifiers)
     end
 end
 

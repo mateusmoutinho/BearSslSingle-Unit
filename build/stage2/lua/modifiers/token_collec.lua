@@ -1,7 +1,7 @@
 ---@param path string
 ---@return Token[]
 function Collect_tokens(path)
-    os.execute("ctags --kinds-C=fpstv " .. path)
+    os.execute("ctags  " .. path)
     local content = dtw.load_file("tags")
     lines = clib.split(content, "\n")
     all_elements = {}

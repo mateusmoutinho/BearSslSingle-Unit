@@ -16,6 +16,9 @@
         "cswap",
         "api_mul",
         "api_mulgen",
-        "api_muladd"
+        "api_muladd",
+        "norm13",
+        "mul20",
+        "square20"
     ]
 }

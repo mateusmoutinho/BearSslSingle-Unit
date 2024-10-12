@@ -1,5 +1,16 @@
 {
-        "replacers":{},
-        "name":"ec_c25519_m15",
-        "private":[]
-    }
+    "replacers": {},
+    "name": "ec_c25519_m15",
+    "private": [
+        "ARSH",
+        "le8_to_le13",
+        "le13_to_le8",
+        "norm13",
+        "mul20",
+        "ZADD",
+        "ZSUB2F",
+        "CPR1",
+        "CPR",
+        "square20"
+    ]
+}

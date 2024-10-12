@@ -1,6 +1,11 @@
-function add(ret, x, y)
-    set(ret, "=", x, "+", y)
-end
+r = [[
+    int r+a;
+    void ssa(){
 
-setvar("int x",
-);
+    }
+]]
+
+local token_pattern = "([^%w])" .. "a" .. "([^%w])"
+
+r = string.gsub(r, token_pattern, "%1teste%2")
+print(r)

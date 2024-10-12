@@ -2,6 +2,7 @@
 *.d
 BearSSL
 Project
+release
 # Object files
 *.o
 *.ko

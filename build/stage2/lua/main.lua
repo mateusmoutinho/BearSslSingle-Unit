@@ -9,6 +9,7 @@ local function main()
     local single_unit_point = dtw.concat_path(RELEASE_FOLDER, SINGLE_UNIT_FOLDER)
     dtw.copy_any_overwriting("BearSSL/inc", single_unit_point .. "/inc")
 
+
     local src = dtw.newTree_from_hardware("BearSSL/src")
     main_replace_json = json.load_from_file("main_replace.json")
 
@@ -16,11 +17,12 @@ local function main()
         Aply_file_modification(main_replace_json, current)
     end)
     src.commit()
-    dtw.copy_any_overwriting("one.c", SINGLE_UNIT_FOLDER .. "/one.c")
+
+    dtw.copy_any_overwriting("one.c", single_unit_point .. "/one.c")
 
     silver_chain.generate_code(
-        SINGLE_UNIT_FOLDER .. "/src",
-        SINGLE_UNIT_FOLDER .. "/imports",
+        single_unit_point .. "/src",
+        single_unit_point .. "/imports",
         SILVER_CHAIN_NAME,
         { "bear", DECLARE_NAME, DEFINE_NAME }
     )

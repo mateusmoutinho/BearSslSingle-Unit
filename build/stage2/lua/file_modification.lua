@@ -3,7 +3,10 @@
 function Aply_file_modification(json_main_replacer, file)
     local is_c_file = false
     local original_path = dtw.newPath(file.path.get_full_path())
-    file.path.set_dir(dtw.concat_path(RELEASE_FOLDER, SINGLE_UNIT_FOLDER))
+    local new_src = dtw.concat_path(RELEASE_FOLDER, SINGLE_UNIT_FOLDER)
+    new_src = dtw.concat_path(new_src, "src")
+
+    file.path.replace_dirs("BearSSL/src", new_src)
 
     if file.path.get_extension() == "c" then
         is_c_file = true

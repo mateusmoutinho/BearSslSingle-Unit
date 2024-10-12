@@ -6,10 +6,10 @@ local function main()
     end
 
     dtw.remove_any(SINGLE_UNIT_FOLDER)
-    dtw.copy_any_overwriting("BearSSL/inc", SINGLE_UNIT_FOLDER .. "/inc")
-    dtw.copy_any_overwriting("BearSSL/src", SINGLE_UNIT_FOLDER .. "/src")
+    local single_unit_point = dtw.concat_path(RELEASE_FOLDER, SINGLE_UNIT_FOLDER)
+    dtw.copy_any_overwriting("BearSSL/inc", single_unit_point .. "/inc")
 
-    local src = dtw.newTree_from_hardware(SINGLE_UNIT_FOLDER .. "/src")
+    local src = dtw.newTree_from_hardware("BearSSL/src")
     main_replace_json = json.load_from_file("main_replace.json")
 
     src.each(function(current)

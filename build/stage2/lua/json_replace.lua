@@ -23,7 +23,7 @@ function Create_json_modifier_model_if_not_exist(path, name_without_extension)
     if dtw.isfile(path) then
         return
     end
-    local formmated = clib.replace(DEFAULT_JSON_MODIFIER_MODEL, "#name#", name_without_extension)
+    local formmated = clib.replace(RELEASE_FOLDER, "#name#", name_without_extension)
     dtw.write_file(path, formmated)
 end
 

@@ -1,5 +1,0 @@
-{
-        "replacers":{},
-        "name":"config",
-        "private":[]
-    }

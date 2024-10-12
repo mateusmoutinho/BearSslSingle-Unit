@@ -6,6 +6,7 @@ DEFAULT_JSON_MODIFIER_MODEL = [[{
 ]]
 
 MODIFIER_FOLDER             = "modifier"
+RELEASE_FOLDER              = "release"
 SINGLE_UNIT_FOLDER          = "BearSSLSingleUnit"
 DECLARE_NAME                = "fdeclare"
 DEFINE_NAME                 = "fdefine"

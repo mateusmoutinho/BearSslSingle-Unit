@@ -44,6 +44,8 @@ summary.json
 *.idb
 *.pdb
 release
+release_old
+
 # Kernel Module Compile Results
 *.mod*
 *.cmd

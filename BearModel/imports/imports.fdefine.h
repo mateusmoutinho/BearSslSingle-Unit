@@ -26,8 +26,8 @@
 #include "../src/ec/fdefine.ec_c25519_m15.c"
 #include "../src/ec/fdefine.ec_c25519_m31.c"
 #include "../src/ec/fdefine.ec_c25519_m62.c"
-/*
 #include "../src/ec/fdefine.ec_c25519_m64.c"
+/*
 #include "../src/ec/fdefine.ec_curve25519.c"
 #include "../src/ec/fdefine.ec_default.c"
 #include "../src/ec/fdefine.ec_keygen.c"

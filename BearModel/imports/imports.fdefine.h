@@ -26,9 +26,9 @@
 #include "../src/ec/fdefine.ec_c25519_i15.c"
 
 #include "../src/ec/fdefine.ec_c25519_i31.c"
-/*
-#include "../src/ec/fdefine.ec_c25519_m15.c"
 
+#include "../src/ec/fdefine.ec_c25519_m15.c"
+/*
 #include "../src/ec/fdefine.ec_c25519_m31.c"
 
 #include "../src/ec/fdefine.ec_c25519_m62.c"

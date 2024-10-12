@@ -5,8 +5,9 @@ local function main()
         os.execute("git clone " .. PROVIDER_GIT)
     end
 
-    dtw.remove_any(SINGLE_UNIT_FOLDER)
     local single_unit_point = dtw.concat_path(RELEASE_FOLDER, SINGLE_UNIT_FOLDER)
+    dtw.remove_any(single_unit_point)
+
     dtw.copy_any_overwriting("BearSSL/inc", single_unit_point .. "/inc")
 
 
@@ -19,12 +20,12 @@ local function main()
     src.commit()
 
     dtw.copy_any_overwriting("one.c", single_unit_point .. "/one.c")
-
     silver_chain.generate_code(
         single_unit_point .. "/src",
         single_unit_point .. "/imports",
         SILVER_CHAIN_NAME,
         { "bear", DECLARE_NAME, DEFINE_NAME }
     )
+    dtw.copy_any_merging("BearModel", single_unit_point)
 end
 main()

@@ -1,12 +1,5 @@
 {
-    "replacers": {},
-    "name": "ec_all_m31",
-    "private": [
-        "api_generator",
-        "api_order",
-        "api_xoff",
-        "api_mul",
-        "api_mulgen",
-        "api_muladd"
-    ]
-}
+        "replacers":{},
+        "name":"ec_all_m31",
+        "private":[]
+    }

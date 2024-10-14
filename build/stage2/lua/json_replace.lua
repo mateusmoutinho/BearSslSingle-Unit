@@ -23,10 +23,14 @@ end
 ---@return number
 function find_point(content, line, col)
     local lines = clib.split(content, "\n")
-    size = 1
-    for i = 1, #lines - line do
+    local size  = 0
+    for i = 1, line - 1 do
         local current_line = lines[i]
-        size = size + clib.get_str_size(current_line)
+        if not current_line then
+            break
+        end
+        local line_size = clib.get_str_size(current_line)
+        size = size + line_size + 1 --1 for \n
     end
     return size + col
 end
@@ -41,10 +45,12 @@ end
 function Replace_item_in_line_and_col(content, line, col, old_content, new_content)
     local size = clib.get_str_size(content)
     local insert_point = find_point(content, line, col)
+    print(insert_point)
+    print(clib.indexof(content, old_content))
     local old_content_size = clib.get_str_size(old_content);
     local start = clib.substr(content, 1, insert_point)
     local end_str = clib.substr(content, insert_point + old_content_size, size)
-    return start
+    return content
 end
 
 ---@param json_modifier_path string

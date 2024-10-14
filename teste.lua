@@ -1,8 +1,8 @@
-r = {
-    a = "aaa",
-    v = "aaa"
-}
+111
+111s
+111
 
-for i, h in pairs(r) do
-    print(i, h)
-end
+
+
+
+size

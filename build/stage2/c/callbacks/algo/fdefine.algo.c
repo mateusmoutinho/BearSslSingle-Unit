@@ -44,7 +44,7 @@ LuaCEmbedResponse * lua_index_of(LuaCEmbedTable *self,LuaCEmbed *args){
     CTextStack *content_stack = stack.newStack_string(content);
     int index = stack.index_of(content_stack,target);
     stack.free(content_stack);
-    return  lua.response.send_long(index);
+    return  lua.response.send_long(index-1);
 }
 LuaCEmbedResponse * lua_replace_string(LuaCEmbedTable *self,LuaCEmbed *args){
 
@@ -78,4 +78,39 @@ LuaCEmbedResponse * lua_trim(LuaCEmbedTable *self,LuaCEmbed *args){
     LuaCEmbedResponse *response =lua.response.send_str(content_stack->rendered_text);
     stack.free(content_stack);
     return  response;
+}
+
+LuaCEmbedResponse * lua_split(LuaCEmbedTable *self,LuaCEmbed *args){
+
+    char *content = lua.args.get_str(args,0);
+    char *target = lua.args.get_str(args,1);
+    if(lua.has_errors(args)){
+        char *error_msg = lua.get_error_message(args);
+        return lua.response.send_error(error_msg);
+    }
+
+    CTextArray *itens =CTextArray_split(content, target);
+    LuaCEmbedTable *itens_lua_table = lua.tables.new_anonymous_table(args);
+    for(int i = 0 ; i <itens->size;i++){
+        lua.tables.append_string(itens_lua_table,itens->stacks[i]->rendered_text);
+    }
+    CTextArray_free(itens);
+    return  lua.response.send_table(itens_lua_table);
+}
+
+LuaCEmbedResponse * lua_substr(LuaCEmbedTable *self,LuaCEmbed *args){
+
+    char *content = lua.args.get_str(args,0);
+    int start = lua.args.get_long(args,1)-1;
+    int end  =  lua.args.get_long(args,1)-1;
+
+    if(lua.has_errors(args)){
+        char *error_msg = lua.get_error_message(args);
+        return lua.response.send_error(error_msg);
+    }
+    CTextStack *s = stack.newStack_string(content);
+    stack.self_substr(s,start,end);
+    LuaCEmbedResponse *response =lua.response.send_str(s->rendered_text);
+    stack.free(s);
+    return response;
 }

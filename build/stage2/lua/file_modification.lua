@@ -23,13 +23,11 @@ function Aply_file_modification(json_main_replacer, file)
 
     if is_c_file then
         json_modifier_path = Generate_mdifier_model_path(file.path)
-        Create_json_modifier_model_if_not_exist(
-            json_modifier_path,
-            original_path.get_only_name()
-        )
         local content = file.get_value()
         local formmated = Aply_json_replace(main_replace_json, content)
-        formmated = Aply_json_modifier(json_modifier_path, formmated)
+        if dtw.isfile(json_modifier_path) then
+            formmated = Aply_json_modifier(json_modifier_path, formmated)
+        end
         file.set_value(formmated)
         file.hardware_write()
     end

@@ -66,6 +66,17 @@ function Aply_json_modifier(json_modifier_path, content)
         local col = current['point'][2]
         local new_name = current['new_name']
         new_content = Replace_item_in_line_and_col(new_content, line, col, original, new_name)
+        local calls = current['calls']
+        for x = 1, #calls do
+            local current_call = calls[x]
+            new_content = Replace_item_in_line_and_col(
+                new_content,
+                current_call[1],
+                current_call[2],
+                original,
+                new_name
+            )
+        end
     end
     return new_content
 end

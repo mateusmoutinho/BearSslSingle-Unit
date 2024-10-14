@@ -1,0 +1,14 @@
+[
+    {
+        "type": "renamed_token",
+        "original_name": "api_generator",
+        "point": [33, 1],
+        "new_name": "private_ec_all_m15_api_generator"
+    },
+    {
+        "type": "renamed_token",
+        "original_name": "api_order",
+        "point": [46, 1],
+        "new_name": "private_ec_all_m15_api_order"
+    }
+]

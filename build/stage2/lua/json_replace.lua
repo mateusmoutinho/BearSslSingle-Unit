@@ -48,12 +48,10 @@ end
 function Replace_item_in_line_and_col(content, line, col, old_content, new_content)
     local size = clib.get_str_size(content)
     local insert_point = find_point(content, line, col)
-    print(insert_point)
-    print(clib.indexof(content, old_content))
     local old_content_size = clib.get_str_size(old_content);
     local start = clib.substr(content, 1, insert_point)
     local end_str = clib.substr(content, insert_point + old_content_size, size)
-    return content
+    return start .. new_content .. end_str
 end
 
 ---@param json_modifier_path string
@@ -70,4 +68,19 @@ function Aply_json_modifier(json_modifier_path, content)
         new_content = Replace_item_in_line_and_col(new_content, line, col, original, new_name)
     end
     return new_content
+end
+
+---@param file DtwTreePart
+function generate_json_modification_in_part(file)
+    local extension = file.path.get_extension()
+    if extension ~= 'c' and extension ~= 'h' then
+        return
+    end
+    local json_modifier_path = Generate_mdifier_model_path(file.path)
+    if dtw.isfile(json_modifier_path) then
+        local content = file.get_value()
+        content = Aply_json_modifier(json_modifier_path, content)
+        file.set_value(content)
+        file.hardware_modify()
+    end
 end

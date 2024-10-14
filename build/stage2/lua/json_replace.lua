@@ -50,7 +50,7 @@ function Replace_item_in_line_and_col(content, line, col, old_content, new_conte
     local insert_point = find_point(content, line, col)
     local old_content_size = clib.get_str_size(old_content);
     local start = clib.substr(content, 1, insert_point)
-    local end_str = clib.substr(content, insert_point + old_content_size, size)
+    local end_str = clib.substr(content, insert_point + old_content_size, size + 1)
     return start .. new_content .. end_str
 end
 
@@ -92,6 +92,6 @@ function generate_json_modification_in_part(file)
         local content = file.get_value()
         content = Aply_json_modifier(json_modifier_path, content)
         file.set_value(content)
-        file.hardware_modify()
+        file.hardware_write()
     end
 end

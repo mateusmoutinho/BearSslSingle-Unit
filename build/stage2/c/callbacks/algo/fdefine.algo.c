@@ -102,7 +102,7 @@ LuaCEmbedResponse * lua_substr(LuaCEmbedTable *self,LuaCEmbed *args){
 
     char *content = lua.args.get_str(args,0);
     int start = lua.args.get_long(args,1)-1;
-    int end  =  lua.args.get_long(args,1)-1;
+    int end  =  lua.args.get_long(args,2)-1;
 
     if(lua.has_errors(args)){
         char *error_msg = lua.get_error_message(args);

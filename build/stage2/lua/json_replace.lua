@@ -22,17 +22,20 @@ end
 ---@param col number
 ---@return number
 function find_point(content, line, col)
-    local lines = clib.split(content, "\n")
-    local size  = 0
-    for i = 1, line - 1 do
-        local current_line = lines[i]
-        if not current_line then
+    local content_size = clib.get_str_size(content)
+    local total_lines  = 1
+    local total_chars  = 0
+    for i = 1, content_size do
+        if total_lines == line then
             break
         end
-        local line_size = clib.get_str_size(current_line)
-        size = size + line_size + 1 --1 for \n
+        total_chars = i
+        local current_char = clib.get_char(content, i)
+        if current_char == '\n' then
+            total_lines = total_lines + 1
+        end
     end
-    return size + col
+    return total_chars + col
 end
 
 ---comment

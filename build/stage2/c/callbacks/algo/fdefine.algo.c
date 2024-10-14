@@ -44,7 +44,7 @@ LuaCEmbedResponse * lua_index_of(LuaCEmbedTable *self,LuaCEmbed *args){
     CTextStack *content_stack = stack.newStack_string(content);
     int index = stack.index_of(content_stack,target);
     stack.free(content_stack);
-    return  lua.response.send_long(index-1);
+    return  lua.response.send_long(index+1);
 }
 LuaCEmbedResponse * lua_replace_string(LuaCEmbedTable *self,LuaCEmbed *args){
 

@@ -74,8 +74,8 @@ function NewModifier(part)
             for i = 1, #self.tokens do
                 local current = self.tokens[i]
                 if current.replace then
-                    local token_pattern = "([^%w%.])" .. current.value .. "([^%w_])"
-                    content = string.gsub(content, token_pattern, "%1" .. current.replace .. "%2")
+                    --local token_pattern = "([^%w%])" .. current.value .. "([^%w_])"
+                    content = clib.replace(content,current.value,current.replace)
                 end
             end
         end

@@ -19,7 +19,7 @@ local function main()
     end)
     src.commit()
 
-    dtw.copy_any_overwriting("one.c", single_unit_point .. "/one.c")
+    dtw.copy_any_merging("BearModel", single_unit_point)
     silver_chain.generate_code(
         single_unit_point .. "/src",
         single_unit_point .. "/imports",
